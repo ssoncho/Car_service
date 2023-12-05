@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Веб-консоль</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+        <div class="container">
+            <nav class="header-line">
+                <a class="nav-item" href="#">Просмотр заявок</a>
+                <a class="nav-item" href="#">Добавить заявку</a>
+                <a class="nav-item" href="#">Управление ресурсами</a>
+                <div class="profile">
+                    <a class="name">Иванов Иван Иванович</a>
+                    <div align="right"><a class="exit" href="#">Выйти</a></div>                    
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="col">
+            <div class="first-col">
+                <div class="container-1">
+                    <div><a class="name">Заявка №1</a></div>
+                    <div><a class="editing" href="editing the application.html">редактировать</a></div>
+                    <div class="first-block"><a class="status">в работе</a></div>
+                </div>
+
+                <div class="container-2">
+                    <div><p class="font-style1">ФИО клиента:</p></div>
+                    <div><p class="font-style2">Петров Петр Петрович</p></div>
+                    <div>
+                        <p><a class="font-style1">Телефон:</a>
+                        <a class="font-style2"> +7912****043</a></p>
+                    </div>
+                    <div class="second-block"><a class="sent-notifications">Отправить уведомление об обновлениях</a></div>
+                    <div class="logos">
+                        <img class="tg" src="tg.png" alt="">
+                        <img src="vk.png" alt="">
+                    </div>
+                </div>
+
+                <div class="container-3">
+                    <div>
+                        <p><a class="font-style1">Марка автомобиля:</a>
+                        <a class="font-style2"> LADA</a></p>
+                    </div>
+                    <div>
+                        <p><a class="font-style1">Модель:</a>
+                        <a class="font-style2"> 217130 LADA Priora</a></p>
+                    </div>
+                    <div>
+                        <p><a class="font-style1">Регистрационный знак:</a>
+                        <a class="font-style2"> P753MT174</a></p>
+                    </div>
+                    <div>
+                        <p><a class="font-style1">VIN-номер:</a>
+                        <a class="font-style2"> XTA217130C0070165</a></p>
+                    </div>
+                    <div>
+                        <p><a class="font-style1">Год выпуска:</a>
+                        <a class="font-style2"> 2011</a></p>
+                    </div>
+                </div>
+
+                <div class="container-4">
+                    <div>
+                        <p><a class="font-style1">Дата подачи заявки:</a>
+                        <a class="font-style2"> 24.02.2024</a></p>
+                    </div>
+                    <div>
+                        <p><a class="font-style1">Дата выполнения заказа:</a>
+                        <a class="font-style2"> ещё в работе</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="second-col">
+                <div style="display: flex;" class="container-5">
+                    <div class="container-5-1" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 15px;"; width: 350px;">
+                        <div class="container-5-1-1">
+                            <div><p><a class="type-of-work">Замена тормозных колодок</a></p></div>
+                            <div><p><a class="design-of-price1">1300 руб.</a></p></div>                            
+                        </div>
+                        <div class="container-5-1-2">
+                            <div><p><a class="font-style1"> Использовать запчасти:</a></p></div>
+                            <div>
+                                <p><a class="font-style2">деталь №1</a>
+                                <a class="design-of-price1">          500 руб.</a></p>
+                            </div>
+                            <div><a class="font-style1-1" class="space"><input type="radio" name="a" value="checked"> деталь клиента</a></div>                            
+                        </div>
+                        <div class="container-5-1-3">
+                            <div>
+                                <p><a class="font-style2">деталь №2</a>
+                                <a class="design-of-price2">1200 руб.</a></p>
+                            </div>
+                            <div><a class="font-style1-1" class="space"><input type="radio" name="a" value="checked" checked> деталь клиента</a></div>                            
+                        </div>
+                    </div>
+                    <div class="container-5-2" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 3px;" >
+                        <div align="right" class="container-5-2-0"><a class="font-style3">в работе</a></div>
+                        <div class="container-5-2-1">
+                            <p class="font-style1">Ответственный механик:</p>
+                            <p class="font-style2">Анисимов Анисим Анисимович</p>
+                        </div>
+                        <div align="right" class="container-5-2-2"><a class="status1">Отправлено механику</a></div>
+                    </div>
+                </div>
+                <div class="container-6">
+                    <p class="font-style1">Комментарий механика:</p>
+                    <p class="font-style2">*комментариев нет*</p>
+                </div>                
+            </div>
+            
+            <div class="third-col">
+                <div class="container-7">
+                    <p class="result">Итого: <span>1800 руб.</span></p>
+                </div>
+                <div class="container-8">
+                    <p class="name">Отчет</p>
+                    <p><a class="font-style1" href="#">Отправить клиенту</a></p>
+                    <p><a class="font-style1" href="#">Печать</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+  </body>
+</html>

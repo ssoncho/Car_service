@@ -1,0 +1,19 @@
+﻿using Newtonsoft.Json;
+
+namespace CarServiceWebConsole.DTO
+{
+    public class CreateWorkerParticipationNewOrderDTO
+    {
+        [JsonProperty("status")]
+        public string Status { get; set; }
+
+        [JsonProperty("comment")]
+        public string Comment { get; set; }
+
+        [JsonProperty("materials")]
+        public List<CreateMaterialPositionNewOrderDTO> Materials { get; set; }
+
+        [JsonProperty("service")]
+        public CreateServicePositionNewOrderDTO Service { get; set; }
+    }
+}

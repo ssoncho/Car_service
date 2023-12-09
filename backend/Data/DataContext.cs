@@ -25,8 +25,8 @@ namespace CarServiceWebConsole.Data
             var car = modelBuilder.Entity<Car>();
             car.Property(c => c.Brand).HasMaxLength(10);
             car.Property(c => c.Model).HasMaxLength(30);
-            car.Property(c => c.Vin).HasMaxLength(17);
-            car.Property(c => c.StateNumber).HasMaxLength(9);
+            car.Property(c => c.Vin).HasColumnType("char(17)");
+            car.Property(c => c.StateNumber).HasColumnType("char(9)");
 
             var customer = modelBuilder.Entity<Customer>();
             customer.Property(c => c.Name).HasMaxLength(20);
@@ -38,12 +38,18 @@ namespace CarServiceWebConsole.Data
 
             var product = modelBuilder.Entity<Product>();
             product.Property(p => p.Name).HasMaxLength(50);
+            var productPosition = modelBuilder.Entity<ProductPosition>();
+            productPosition.Property(p => p.Name).HasMaxLength(50);
 
             var material = modelBuilder.Entity<Material>();
             product.Property(m => m.Name).HasMaxLength(50);
+            var materialPosition = modelBuilder.Entity<MaterialPosition>();
+            materialPosition.Property(m => m.Name).HasMaxLength(50);
 
             var service = modelBuilder.Entity<Service>();
             product.Property(s => s.Name).HasMaxLength(100);
+            var servicePosition = modelBuilder.Entity<ServicePosition>();
+            servicePosition.Property(s => s.Name).HasMaxLength(50);
 
             var worker = modelBuilder.Entity<Worker>();
             customer.Property(w => w.Name).HasMaxLength(20);
@@ -55,14 +61,12 @@ namespace CarServiceWebConsole.Data
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Material> Materials { get; set; }
         public DbSet<MaterialPosition> MaterialPositions { get; set; }
-        public DbSet<MaterialPrice> MaterialPrices { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductPosition> ProductPositions { get; set; }
-        public DbSet<ProductPrice> ProductPrices { get; set; }
         public DbSet<Record> Records { get; set; }
         public DbSet<Service> Services { get; set; }
-        public DbSet<ServicePrice> ServicePrices { get; set; }
+        public DbSet<ServicePosition> ServicePositions { get; set; }
         public DbSet<Worker> Workers { get; set; }
         public DbSet<WorkerParticipation> WorkerParticipations { get; set; }
     }

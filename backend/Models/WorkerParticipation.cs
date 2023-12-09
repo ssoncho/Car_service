@@ -10,8 +10,7 @@
         public Record Record { get; set; }
         public int WorkerId { get; set; }
         public Worker Worker { get; set; }
-        public int ServiceId { get; set; }
-        public Service Service { get; set; }
         public List<MaterialPosition> MaterialPositions { get; set; }
+        public ServicePosition ServicePosition { get; set; }
     }
 }

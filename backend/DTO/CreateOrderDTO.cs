@@ -19,19 +19,13 @@ namespace CarServiceWebConsole.DTO
         [JsonProperty("completionDate")]
         public DateTime? CompletionDate { get; set; }
 
-        [JsonProperty("customer")]
-        public CreateCustomerDTO Customer { get; set; }
-
         [JsonProperty("car")]
         public CreateCarDTO Car { get; set; }
 
         [JsonProperty("record")]
         public CreateRecordDTO Record { get; set; }
 
-        [JsonProperty("workerParticipation")]
-        public List<CreateWorkerParticipationNewOrderDTO> WorkerParticipation { get; set; }
-
         [JsonProperty("products")]
-        public List<CreateProductPositionNewOrderDTO> Products { get; set; }
+        public List<CreateProductPositionNewOrderDTO> ProductPositions { get; set; }
     }
 }

@@ -11,9 +11,9 @@ namespace CarServiceWebConsole.DTO
         public string Comment { get; set; }
 
         [JsonProperty("materials")]
-        public List<CreateMaterialPositionNewOrderDTO> Materials { get; set; }
+        public List<CreateMaterialPositionNewOrderDTO> MaterialPositions { get; set; }
 
         [JsonProperty("service")]
-        public CreateServicePositionNewOrderDTO Service { get; set; }
+        public CreateServicePositionNewOrderDTO ServicePosition { get; set; }
     }
 }

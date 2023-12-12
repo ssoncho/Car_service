@@ -8,7 +8,7 @@ namespace CarServiceWebConsole.DTO
         public string Name { get; set; }
 
         [JsonProperty("patronymic")]
-        public string Patronymic { get; set; }
+        public string? Patronymic { get; set; }
 
         [JsonProperty("surname")]
         public string Surname { get; set; }

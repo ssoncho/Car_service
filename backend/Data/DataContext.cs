@@ -26,7 +26,9 @@ namespace CarServiceWebConsole.Data
             car.Property(c => c.Brand).HasMaxLength(10);
             car.Property(c => c.Model).HasMaxLength(30);
             car.Property(c => c.Vin).HasColumnType("char(17)");
-            car.Property(c => c.StateNumber).HasColumnType("char(9)");
+            car.Property(c => c.StateNumber).HasColumnType("varchar(9)");
+            car.HasIndex(c => c.StateNumber).IsUnique();
+            car.HasIndex(c => c.Vin).IsUnique();
 
             var customer = modelBuilder.Entity<Customer>();
             customer.Property(c => c.Name).HasMaxLength(20);
@@ -35,6 +37,9 @@ namespace CarServiceWebConsole.Data
             customer.Property(c => c.PhoneNumber).HasMaxLength(20);
             customer.Property(c => c.TelegramAlias).HasMaxLength(20);
             customer.Property(c => c.VkAlias).HasMaxLength(20);
+            customer.HasIndex(c => c.PhoneNumber).IsUnique();
+            customer.HasIndex(c => c.TelegramAlias).IsUnique();
+            customer.HasIndex(c => c.VkAlias).IsUnique();
 
             var product = modelBuilder.Entity<Product>();
             product.Property(p => p.Name).HasMaxLength(50);

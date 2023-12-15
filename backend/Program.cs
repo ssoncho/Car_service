@@ -1,6 +1,14 @@
 global using CarServiceWebConsole.Models;
 using CarServiceWebConsole.Data;
+using CarServiceWebConsole.Services.CarService;
+using CarServiceWebConsole.Services.CustomerService;
+using CarServiceWebConsole.Services.MaterialPositionService;
 using CarServiceWebConsole.Services.OrderService;
+using CarServiceWebConsole.Services.ProductPositionService;
+using CarServiceWebConsole.Services.RecordService;
+using CarServiceWebConsole.Services.ServicePositionService;
+using CarServiceWebConsole.Services.WorkerParticipationService;
+using CarServiceWebConsole.Services.WorkerService;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +21,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICarService, CarService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IMaterialPositionService, MaterialPositionService>();
+builder.Services.AddScoped<IProductPositionService, ProductPositionService>();
+builder.Services.AddScoped<IRecordService, RecordService>();
+builder.Services.AddScoped<IServicePositionService, ServicePositionService>();
+builder.Services.AddScoped<IWorkerParticipationService, WorkerParticipationService>();
+builder.Services.AddScoped<IWorkerService, WorkerService>();
 
 builder.Services.AddDbContext<DataContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("CarServiceDb"))

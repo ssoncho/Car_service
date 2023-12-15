@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarServiceWebConsole.DTO;
+using CarServiceWebConsole.Mapper;
 using CarServiceWebConsole.Services.CarService;
 using CarServiceWebConsole.Services.CustomerService;
 using CarServiceWebConsole.Services.MaterialPositionService;
@@ -8,6 +9,7 @@ using CarServiceWebConsole.Services.ProductPositionService;
 using CarServiceWebConsole.Services.RecordService;
 using CarServiceWebConsole.Services.ServicePositionService;
 using CarServiceWebConsole.Services.WorkerParticipationService;
+using CarServiceWebConsole.Services.WorkerService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,15 +27,9 @@ namespace CarServiceWebConsole.Controllers
         private readonly IRecordService _recordService;
         private readonly IServicePositionService _servicePositionService;
         private readonly IWorkerParticipationService _workerParticipationService;
+        private readonly IWorkerService _workerService;
 
-        private readonly IMapper _mapper;
-
-        public OrdersController(IMapper mapper)
-        {
-            _mapper = mapper;
-        }
-
-        public OrdersController(IOrderService orderService, ICarService carService, ICustomerService customerService, IMaterialPositionService materialPositionService, IProductPositionService productPositionService, IRecordService recordService, IServicePositionService servicePositionService, IWorkerParticipationService workerParticipationService)
+        public OrdersController(IOrderService orderService, ICarService carService, ICustomerService customerService, IMaterialPositionService materialPositionService, IProductPositionService productPositionService, IRecordService recordService, IServicePositionService servicePositionService, IWorkerParticipationService workerParticipationService, IWorkerService workerService)
         {
             _orderService = orderService;
             _carService = carService;
@@ -43,28 +39,41 @@ namespace CarServiceWebConsole.Controllers
             _recordService = recordService;
             _servicePositionService = servicePositionService;
             _workerParticipationService = workerParticipationService;
+            _workerService = workerService;
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrderAsync(CreateOrderDTO orderDTO)
+        public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] CreateOrderDTO orderDto)
         {
-            var order = _mapper.Map<Order>(orderDTO);
+            var order = orderDto.FromDto();
             var car = order.Car;
             var customer = car.Customer;
-            var record = order.Record;
-            var workerParticipations = record.WorkerParticipations;
-            var materialPositionsPerWorkerParticipation = workerParticipations.Select(w => w.MaterialPositions);
-            var servicePositionPerWorkerParticipation = workerParticipations.Select(w => w.ServicePosition);
-            var productPositions = order.ProductPositions;
-
             await _customerService.CreateCustomerAsync(customer);
             await _carService.CreateCarAsync(car);
-            servicePositionPerWorkerParticipation.Select(async s => await _servicePositionService.CreateServicePositionAsync(s));
-            materialPositionsPerWorkerParticipation.SelectMany(mPerw => mPerw)
-                .Select(async m => await _materialPositionService.CreateMaterialPositionAsync(m));
-            workerParticipations.Select(async w => await _workerParticipationService.CreateWorkerParticipationAsync(w));
-            await _recordService.CreateRecordAsync(record);
-            productPositions.Select(async p => await _productPositionService.CreateProductPositionAsync(p));
+            var record = order.Record;
+            if (record != null)
+            {
+                await _recordService.CreateRecordAsync(record);
+                var workerParticipations = record.WorkerParticipations;
+                var workers = workerParticipations.Select(wp => _workerService.GetWorkerById(wp.WorkerId));
+                workerParticipations = workerParticipations
+                    .Zip(workers, (wp, worker) => { wp.Worker = worker; return wp; })
+                    .ToList();
+                var materialPositionsPerWorkerParticipation = workerParticipations.Select(w => w.MaterialPositions);
+                var servicePositionPerWorkerParticipation = workerParticipations.Select(w => w.ServicePosition);
+                servicePositionPerWorkerParticipation.Select(async s => await _servicePositionService.CreateServicePositionAsync(s));
+                materialPositionsPerWorkerParticipation.SelectMany(mPerw => mPerw)
+                    .Select(async m => await _materialPositionService.CreateMaterialPositionAsync(m))
+                    .ToList();
+                workerParticipations
+                    .Select(async w => await _workerParticipationService.CreateWorkerParticipationAsync(w))
+                    .ToList();
+            }
+            
+            var productPositions = order.ProductPositions;
+            productPositions
+                .Select(async p => await _productPositionService.CreateProductPositionAsync(p))
+                .ToList();
             
             var result = await _orderService.CreateOrderAsync(order);
             return Ok(result);

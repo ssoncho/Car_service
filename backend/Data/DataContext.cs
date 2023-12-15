@@ -47,19 +47,19 @@ namespace CarServiceWebConsole.Data
             productPosition.Property(p => p.Name).HasMaxLength(50);
 
             var material = modelBuilder.Entity<Material>();
-            product.Property(m => m.Name).HasMaxLength(50);
+            material.Property(m => m.Name).HasMaxLength(50);
             var materialPosition = modelBuilder.Entity<MaterialPosition>();
             materialPosition.Property(m => m.Name).HasMaxLength(50);
 
             var service = modelBuilder.Entity<Service>();
-            product.Property(s => s.Name).HasMaxLength(100);
+            service.Property(s => s.Name).HasMaxLength(100);
             var servicePosition = modelBuilder.Entity<ServicePosition>();
             servicePosition.Property(s => s.Name).HasMaxLength(50);
 
             var worker = modelBuilder.Entity<Worker>();
-            customer.Property(w => w.Name).HasMaxLength(20);
-            customer.Property(w => w.Patronymic).HasMaxLength(20);
-            customer.Property(w => w.Surname).HasMaxLength(20);
+            worker.Property(w => w.Name).HasMaxLength(20);
+            worker.Property(w => w.Patronymic).HasMaxLength(20);
+            worker.Property(w => w.Surname).HasMaxLength(20);
         }
 
         public DbSet<Car> Cars { get; set; }

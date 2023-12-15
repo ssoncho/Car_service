@@ -11,9 +11,10 @@ namespace CarServiceWebConsole.Models
         public DateOnly CreationDate { get; set; }
         public DateOnly? CompletionDate { get; set; }
 
+        public int? RecordId { get; set; }
         public Record? Record { get; set; }
         public int CarId { get; set; }
         public Car Car { get; set; }
-        public List<ProductPosition>? ProductPositions { get; set; }
+        public List<ProductPosition> ProductPositions { get; set; }
     }
 }

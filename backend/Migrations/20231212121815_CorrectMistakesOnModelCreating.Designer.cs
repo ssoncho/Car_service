@@ -3,6 +3,7 @@ using System;
 using CarServiceWebConsole.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CarServiceWebConsole.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231212121815_CorrectMistakesOnModelCreating")]
+    partial class CorrectMistakesOnModelCreating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -193,9 +196,6 @@ namespace CarServiceWebConsole.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("RecordId")
-                        .HasColumnType("integer");
-
                     b.Property<int?>("SiteId")
                         .HasColumnType("integer");
 
@@ -206,9 +206,6 @@ namespace CarServiceWebConsole.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CarId");
-
-                    b.HasIndex("RecordId")
-                        .IsUnique();
 
                     b.ToTable("Orders");
                 });
@@ -265,11 +262,8 @@ namespace CarServiceWebConsole.Migrations
 
             modelBuilder.Entity("CarServiceWebConsole.Models.Record", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("OrderId")
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<int>("BoxId")
                         .HasColumnType("integer");
@@ -280,7 +274,7 @@ namespace CarServiceWebConsole.Migrations
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("Id");
+                    b.HasKey("OrderId");
 
                     b.ToTable("Records");
                 });
@@ -308,11 +302,8 @@ namespace CarServiceWebConsole.Migrations
 
             modelBuilder.Entity("CarServiceWebConsole.Models.ServicePosition", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("WorkerParticipationId")
                         .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -322,7 +313,7 @@ namespace CarServiceWebConsole.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("integer");
 
-                    b.HasKey("Id");
+                    b.HasKey("WorkerParticipationId");
 
                     b.ToTable("ServicePositions");
                 });
@@ -360,8 +351,11 @@ namespace CarServiceWebConsole.Migrations
 
             modelBuilder.Entity("CarServiceWebConsole.Models.WorkerParticipation", b =>
                 {
-                    b.Property<int>("ServicePositionId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseSerialColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Comment")
                         .IsRequired()
@@ -377,7 +371,7 @@ namespace CarServiceWebConsole.Migrations
                     b.Property<int>("WorkerId")
                         .HasColumnType("integer");
 
-                    b.HasKey("ServicePositionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("RecordId");
 
@@ -416,13 +410,7 @@ namespace CarServiceWebConsole.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("CarServiceWebConsole.Models.Record", "Record")
-                        .WithOne("Order")
-                        .HasForeignKey("CarServiceWebConsole.Models.Order", "RecordId");
-
                     b.Navigation("Car");
-
-                    b.Navigation("Record");
                 });
 
             modelBuilder.Entity("CarServiceWebConsole.Models.ProductPosition", b =>
@@ -436,17 +424,33 @@ namespace CarServiceWebConsole.Migrations
                     b.Navigation("Order");
                 });
 
+            modelBuilder.Entity("CarServiceWebConsole.Models.Record", b =>
+                {
+                    b.HasOne("CarServiceWebConsole.Models.Order", "Order")
+                        .WithOne("Record")
+                        .HasForeignKey("CarServiceWebConsole.Models.Record", "OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("CarServiceWebConsole.Models.ServicePosition", b =>
+                {
+                    b.HasOne("CarServiceWebConsole.Models.WorkerParticipation", "WorkerParticipation")
+                        .WithOne("ServicePosition")
+                        .HasForeignKey("CarServiceWebConsole.Models.ServicePosition", "WorkerParticipationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("WorkerParticipation");
+                });
+
             modelBuilder.Entity("CarServiceWebConsole.Models.WorkerParticipation", b =>
                 {
                     b.HasOne("CarServiceWebConsole.Models.Record", "Record")
                         .WithMany("WorkerParticipations")
                         .HasForeignKey("RecordId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("CarServiceWebConsole.Models.ServicePosition", "ServicePosition")
-                        .WithOne("WorkerParticipation")
-                        .HasForeignKey("CarServiceWebConsole.Models.WorkerParticipation", "ServicePositionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -457,8 +461,6 @@ namespace CarServiceWebConsole.Migrations
                         .IsRequired();
 
                     b.Navigation("Record");
-
-                    b.Navigation("ServicePosition");
 
                     b.Navigation("Worker");
                 });
@@ -476,20 +478,13 @@ namespace CarServiceWebConsole.Migrations
             modelBuilder.Entity("CarServiceWebConsole.Models.Order", b =>
                 {
                     b.Navigation("ProductPositions");
+
+                    b.Navigation("Record");
                 });
 
             modelBuilder.Entity("CarServiceWebConsole.Models.Record", b =>
                 {
-                    b.Navigation("Order")
-                        .IsRequired();
-
                     b.Navigation("WorkerParticipations");
-                });
-
-            modelBuilder.Entity("CarServiceWebConsole.Models.ServicePosition", b =>
-                {
-                    b.Navigation("WorkerParticipation")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CarServiceWebConsole.Models.Worker", b =>
@@ -500,6 +495,9 @@ namespace CarServiceWebConsole.Migrations
             modelBuilder.Entity("CarServiceWebConsole.Models.WorkerParticipation", b =>
                 {
                     b.Navigation("MaterialPositions");
+
+                    b.Navigation("ServicePosition")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

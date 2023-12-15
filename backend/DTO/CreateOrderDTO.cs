@@ -14,10 +14,10 @@ namespace CarServiceWebConsole.DTO
         public string Status { get; set; }
 
         [JsonProperty("creationDate")]
-        public DateTime CreationDate { get; set; }
+        public DateOnly CreationDate { get; set; }
 
         [JsonProperty("completionDate")]
-        public DateTime? CompletionDate { get; set; }
+        public DateOnly? CompletionDate { get; set; }
 
         [JsonProperty("car")]
         public CreateCarDTO Car { get; set; }
@@ -26,6 +26,6 @@ namespace CarServiceWebConsole.DTO
         public CreateRecordDTO? Record { get; set; }
 
         [JsonProperty("products")]
-        public List<CreateProductPositionNewOrderDTO>? ProductPositions { get; set; }
+        public List<CreateProductPositionNewOrderDTO> ProductPositions { get; set; }
     }
 }

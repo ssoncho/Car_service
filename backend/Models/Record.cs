@@ -4,8 +4,7 @@ namespace CarServiceWebConsole.Models
 {
     public class Record
     {
-        [Key]
-        public int OrderId { get; set; }
+        public int Id { get; set; }
         public Order Order { get; set; }
         public int BoxId { get; set; }
         public DateTime StartTime { get; set; }

@@ -1,8 +1,11 @@
-﻿namespace CarServiceWebConsole.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace CarServiceWebConsole.Models
 {
     public class WorkerParticipation
     {
-        public int Id { get; set; }
+        [Key]
+        public int ServicePositionId { get; set; }
         public Status Status { get; set; }
         public string Comment { get; set; }
 

@@ -20,6 +20,7 @@ namespace CarServiceWebConsole.Mapper
                     EndTime = orderDto.Record.EndTime,
                     WorkerParticipations = orderDto.Record.WorkerParticipations.ConvertAll(workerParticipationDto => new WorkerParticipation
                     {
+                        WorkerId = workerParticipationDto.WorkerId,
                         Status = (Status)Enum.Parse(typeof(Status), workerParticipationDto.Status, true),
                         Comment = workerParticipationDto.Comment,
                         MaterialPositions = workerParticipationDto.MaterialPositions.ConvertAll(materialPositionDto => new MaterialPosition

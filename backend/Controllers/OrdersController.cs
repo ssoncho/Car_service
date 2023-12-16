@@ -43,40 +43,12 @@ namespace CarServiceWebConsole.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Order>> CreateOrderAsync([FromBody] CreateOrderDTO orderDto)
+        public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderDTO orderDto)
         {
             var order = orderDto.FromDto();
-            var car = order.Car;
-            var customer = car.Customer;
-            await _customerService.CreateCustomerAsync(customer);
-            await _carService.CreateCarAsync(car);
-            var record = order.Record;
-            if (record != null)
-            {
-                await _recordService.CreateRecordAsync(record);
-                var workerParticipations = record.WorkerParticipations;
-                var workers = workerParticipations.Select(wp => _workerService.GetWorkerById(wp.WorkerId));
-                workerParticipations = workerParticipations
-                    .Zip(workers, (wp, worker) => { wp.Worker = worker; return wp; })
-                    .ToList();
-                var materialPositionsPerWorkerParticipation = workerParticipations.Select(w => w.MaterialPositions);
-                var servicePositionPerWorkerParticipation = workerParticipations.Select(w => w.ServicePosition);
-                servicePositionPerWorkerParticipation.Select(async s => await _servicePositionService.CreateServicePositionAsync(s));
-                materialPositionsPerWorkerParticipation.SelectMany(mPerw => mPerw)
-                    .Select(async m => await _materialPositionService.CreateMaterialPositionAsync(m))
-                    .ToList();
-                workerParticipations
-                    .Select(async w => await _workerParticipationService.CreateWorkerParticipationAsync(w))
-                    .ToList();
-            }
-            
-            var productPositions = order.ProductPositions;
-            productPositions
-                .Select(async p => await _productPositionService.CreateProductPositionAsync(p))
-                .ToList();
             
             var result = await _orderService.CreateOrderAsync(order);
-            return Ok(result);
+            return Ok();
         }
     }
 }

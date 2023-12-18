@@ -48,7 +48,7 @@ namespace CarServiceWebConsole.Controllers
             var order = orderDto.FromDto();
             
             var result = await _orderService.CreateOrderAsync(order);
-            return Ok();
+            return Created(new Uri($"{Request.Path}/{result.Id}", UriKind.Relative), new {OrderId = result.Id});
         }
     }
 }

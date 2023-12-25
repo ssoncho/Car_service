@@ -1,4 +1,5 @@
 ﻿using CarServiceWebConsole.DTO;
+using CarServiceWebConsole.DTO.GetOrderById;
 
 namespace CarServiceWebConsole.Mapper
 {
@@ -60,6 +61,79 @@ namespace CarServiceWebConsole.Mapper
                     Name = productPositionDto.Name,
                     Price = productPositionDto.Price,
                     Count = productPositionDto.Count
+                })
+            };
+        }
+
+        public static GetOrderByIdResponseDto ToDto(this Order order)
+        {
+            return new GetOrderByIdResponseDto
+            {
+                OrderId = order.Id,
+                SiteId = order.SiteId,
+                ProblemDescription = order.ProblemDescription,
+                Status = order.Status.ToString(),
+                CreationDate = order.CreationDate,
+                CompletionDate = order.CompletionDate,
+                Car = new CarDto
+                {
+                    Id = order.Car.Id,
+                    Mileage = order.Car.Mileage,
+                    Brand = order.Car.Brand,
+                    Vin = order.Car.Vin,
+                    StateNumber = order.Car.StateNumber,
+                    Model = order.Car.Model,
+                    ManufactureYear = order.Car.ManufactureYear
+                },
+                Customer = new CustomerDto
+                {
+                    Id = order.Car.Customer.Id,
+                    Name = order.Car.Customer.Name,
+                    Patronymic = order.Car.Customer.Patronymic,
+                    Surname = order.Car.Customer.Surname,
+                    PhoneNumber = order.Car.Customer.PhoneNumber,
+                    TelegramAlias = order.Car.Customer.TelegramAlias,
+                    VkAlias = order.Car.Customer.VkAlias
+                },
+                Record = order.Record != null ? new RecordDto
+                {
+                    Id = order.Record.Id,
+                    BoxId = order.Record.BoxId,
+                    StartTime = order.Record.StartTime,
+                    EndTime = order.Record.EndTime,
+                    WorkerParticipations = order.Record.WorkerParticipations.ConvertAll(workerParticipation => new WorkerParticipationDto
+                    {
+                        Id = workerParticipation.ServicePositionId,
+                        Status = workerParticipation.Status.ToString(),
+                        Comment = workerParticipation.Comment,
+                        Worker = new WorkerDto
+                        {
+                            Name = workerParticipation.Worker.Name,
+                            Patronymic = workerParticipation.Worker.Patronymic,
+                            Surname = workerParticipation.Worker.Surname
+                        },
+                        ServicePosition = new ServicePositionDto
+                        {
+                            Id = workerParticipation.ServicePosition.Id,
+                            Name = workerParticipation.ServicePosition.Name,
+                            Price = workerParticipation.ServicePosition.Price
+                        },
+                        MaterialPositions = workerParticipation.MaterialPositions.ConvertAll(orderRecordWorkerParticipationMaterialPosition => new MaterialPositionDto
+                        {
+                            Id = orderRecordWorkerParticipationMaterialPosition.Id,
+                            Name = orderRecordWorkerParticipationMaterialPosition.Name,
+                            Price = orderRecordWorkerParticipationMaterialPosition.Price,
+                            Count = orderRecordWorkerParticipationMaterialPosition.Count,
+                            ClientHas = orderRecordWorkerParticipationMaterialPosition.ClientHas
+                        })
+                    })
+                } : null,
+                ProductPositions = order.ProductPositions.ConvertAll(productPosition => new ProductPositionDto
+                {
+                    Id = productPosition.Id,
+                    Name = productPosition.Name,
+                    Price = productPosition.Price,
+                    Count = productPosition.Count
                 })
             };
         }

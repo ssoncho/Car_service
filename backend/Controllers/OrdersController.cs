@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using CarServiceWebConsole.DTO;
+using CarServiceWebConsole.DTO.GetOrderById;
 using CarServiceWebConsole.Mapper;
+using CarServiceWebConsole.Services;
 using CarServiceWebConsole.Services.CarService;
 using CarServiceWebConsole.Services.CustomerService;
 using CarServiceWebConsole.Services.MaterialPositionService;
@@ -49,6 +51,21 @@ namespace CarServiceWebConsole.Controllers
             
             var result = await _orderService.CreateOrderAsync(order);
             return Created(new Uri($"{Request.Path}/{result.Id}", UriKind.Relative), new {OrderId = result.Id});
+        }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<GetOrderByIdResponseDto>> GetOrderByIdAsync(int id)
+        {
+            try
+            {
+                var order = await _orderService.GetOrderByIdAsync(id);
+                var orderDto = order.ToDto();
+                return Ok(orderDto);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
         }
     }
 }

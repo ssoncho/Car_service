@@ -1,4 +1,5 @@
 ﻿using CarServiceWebConsole.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarServiceWebConsole.Services.OrderService
 {
@@ -22,9 +23,35 @@ namespace CarServiceWebConsole.Services.OrderService
             throw new NotImplementedException();
         }
 
-        public Task<Order> GetOrderByIdAsync(int id)
+        public async Task<Order> GetOrderByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var order = await _context.Orders
+                .Include(order => order.Record)
+                .Include(order => order.Car)
+                    .ThenInclude(car => car.Customer)
+                .Include(order => order.ProductPositions)
+                .FirstOrDefaultAsync(order => order.Id == id);
+
+            if (order == null)
+            {
+                throw new NotFoundException("Order", id);
+            }
+
+            if (order?.RecordId != null)
+            {
+                _context.Entry(order)
+                    .Reference(order => order.Record)
+                    .Query()
+                    .Include(record => record.WorkerParticipations)
+                        .ThenInclude(wp => wp.Worker)
+                    .Include(record => record.WorkerParticipations)
+                        .ThenInclude(wp => wp.MaterialPositions)
+                    .Include(record => record.WorkerParticipations)
+                        .ThenInclude(wp => wp.ServicePosition)
+                    .Load();
+            }
+
+            return order;
         }
     }
 }

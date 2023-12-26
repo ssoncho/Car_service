@@ -22,8 +22,5 @@ namespace CarServiceWebConsole.DTO
 
         [JsonProperty("manufactureYear")]
         public int ManufactureYear { get; set; }
-
-        [JsonProperty("customer")]
-        public CreateCustomerDTO Customer { get; set; }
     }
 }

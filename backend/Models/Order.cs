@@ -16,5 +16,6 @@ namespace CarServiceWebConsole.Models
         public int CarId { get; set; }
         public Car Car { get; set; }
         public List<ProductPosition> ProductPositions { get; set; }
+        public List<WorkerParticipation> WorkerParticipations { get; set; }
     }
 }

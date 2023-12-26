@@ -29,6 +29,12 @@ namespace CarServiceWebConsole.Services.OrderService
                 .Include(order => order.Record)
                 .Include(order => order.Car)
                     .ThenInclude(car => car.Customer)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.Worker)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.MaterialPositions)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.ServicePosition)
                 .Include(order => order.ProductPositions)
                 .FirstOrDefaultAsync(order => order.Id == id);
 
@@ -42,12 +48,7 @@ namespace CarServiceWebConsole.Services.OrderService
                 _context.Entry(order)
                     .Reference(order => order.Record)
                     .Query()
-                    .Include(record => record.WorkerParticipations)
-                        .ThenInclude(wp => wp.Worker)
-                    .Include(record => record.WorkerParticipations)
-                        .ThenInclude(wp => wp.MaterialPositions)
-                    .Include(record => record.WorkerParticipations)
-                        .ThenInclude(wp => wp.ServicePosition)
+                    
                     .Load();
             }
 

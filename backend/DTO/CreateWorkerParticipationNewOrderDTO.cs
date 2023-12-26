@@ -5,17 +5,17 @@ namespace CarServiceWebConsole.DTO
     public class CreateWorkerParticipationNewOrderDTO
     {
         [JsonProperty("workerId")]
-        public int WorkerId { get; set; }
+        public int? WorkerId { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
 
         [JsonProperty("comment")]
         public string Comment { get; set; }
 
-        [JsonProperty("materials")]
+        [JsonProperty("materialPositions")]
         public List<CreateMaterialPositionNewOrderDTO> MaterialPositions { get; set; }
 
-        [JsonProperty("service")]
+        [JsonProperty("servicePosition")]
         public CreateServicePositionNewOrderDTO ServicePosition { get; set; }
     }
 }

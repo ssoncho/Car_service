@@ -22,10 +22,16 @@ namespace CarServiceWebConsole.DTO
         [JsonProperty("car")]
         public CreateCarDTO Car { get; set; }
 
+        [JsonProperty("customer")]
+        public CreateCustomerDTO Customer { get; set; }
+
         [JsonProperty("record")]
         public CreateRecordDTO? Record { get; set; }
 
-        [JsonProperty("products")]
+        [JsonProperty("workerParticipations")]
+        public List<CreateWorkerParticipationNewOrderDTO> WorkerParticipations { get; set; }
+
+        [JsonProperty("productPositions")]
         public List<CreateProductPositionNewOrderDTO> ProductPositions { get; set; }
     }
 }

@@ -9,7 +9,5 @@ namespace CarServiceWebConsole.Models
         public int BoxId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-
-        public List<WorkerParticipation> WorkerParticipations { get; set; }
     }
 }

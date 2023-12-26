@@ -11,6 +11,7 @@
     public CarDto Car { get; set; }
     public CustomerDto Customer { get; set; }
     public RecordDto? Record { get; set; }
+    public List<WorkerParticipationDto> WorkerParticipations { get; set; }
     public List<ProductPositionDto> ProductPositions { get; set; }
 }
 

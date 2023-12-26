@@ -18,25 +18,7 @@ namespace CarServiceWebConsole.Mapper
                 {
                     BoxId = orderDto.Record.BoxId,
                     StartTime = orderDto.Record.StartTime,
-                    EndTime = orderDto.Record.EndTime,
-                    WorkerParticipations = orderDto.Record.WorkerParticipations.ConvertAll(workerParticipationDto => new WorkerParticipation
-                    {
-                        WorkerId = workerParticipationDto.WorkerId,
-                        Status = (Status)Enum.Parse(typeof(Status), workerParticipationDto.Status, true),
-                        Comment = workerParticipationDto.Comment,
-                        MaterialPositions = workerParticipationDto.MaterialPositions.ConvertAll(materialPositionDto => new MaterialPosition
-                        {
-                            Name = materialPositionDto.Name,
-                            Price = materialPositionDto.Price,
-                            Count = materialPositionDto.Count,
-                            ClientHas = materialPositionDto.ClientHas
-                        }),
-                        ServicePosition = new ServicePosition
-                        {
-                            Name = workerParticipationDto.ServicePosition.Name,
-                            Price = workerParticipationDto.ServicePosition.Price
-                        }
-                    })
+                    EndTime = orderDto.Record.EndTime
                 } : null,
                 Car = new Car
                 {
@@ -48,14 +30,32 @@ namespace CarServiceWebConsole.Mapper
                     ManufactureYear = orderDto.Car.ManufactureYear,
                     Customer = new Customer
                     {
-                        Name = orderDto.Car.Customer.Name,
-                        Patronymic = orderDto.Car.Customer.Patronymic,
-                        Surname = orderDto.Car.Customer.Surname,
-                        PhoneNumber = orderDto.Car.Customer.PhoneNumber,
-                        TelegramAlias = orderDto.Car.Customer.TelegramAlias,
-                        VkAlias = orderDto.Car.Customer.VkAlias
+                        Name = orderDto.Customer.Name,
+                        Patronymic = orderDto.Customer.Patronymic,
+                        Surname = orderDto.Customer.Surname,
+                        PhoneNumber = orderDto.Customer.PhoneNumber,
+                        TelegramAlias = orderDto.Customer.TelegramAlias,
+                        VkAlias = orderDto.Customer.VkAlias
                     }
                 },
+                WorkerParticipations = orderDto.WorkerParticipations.ConvertAll(workerParticipationDto => new WorkerParticipation
+                {
+                    WorkerId = workerParticipationDto.WorkerId,
+                    Status = (Status)Enum.Parse(typeof(Status), workerParticipationDto.Status, true),
+                    Comment = workerParticipationDto.Comment,
+                    MaterialPositions = workerParticipationDto.MaterialPositions.ConvertAll(materialPositionDto => new MaterialPosition
+                    {
+                        Name = materialPositionDto.Name,
+                        Price = materialPositionDto.Price,
+                        Count = materialPositionDto.Count,
+                        ClientHas = materialPositionDto.ClientHas
+                    }),
+                    ServicePosition = new ServicePosition
+                    {
+                        Name = workerParticipationDto.ServicePosition.Name,
+                        Price = workerParticipationDto.ServicePosition.Price
+                    }
+                }),
                 ProductPositions = orderDto.ProductPositions.ConvertAll(productPositionDto => new ProductPosition
                 {
                     Name = productPositionDto.Name,
@@ -101,33 +101,33 @@ namespace CarServiceWebConsole.Mapper
                     BoxId = order.Record.BoxId,
                     StartTime = order.Record.StartTime,
                     EndTime = order.Record.EndTime,
-                    WorkerParticipations = order.Record.WorkerParticipations.ConvertAll(workerParticipation => new WorkerParticipationDto
-                    {
-                        Id = workerParticipation.ServicePositionId,
-                        Status = workerParticipation.Status.ToString(),
-                        Comment = workerParticipation.Comment,
-                        Worker = new WorkerDto
-                        {
-                            Name = workerParticipation.Worker.Name,
-                            Patronymic = workerParticipation.Worker.Patronymic,
-                            Surname = workerParticipation.Worker.Surname
-                        },
-                        ServicePosition = new ServicePositionDto
-                        {
-                            Id = workerParticipation.ServicePosition.Id,
-                            Name = workerParticipation.ServicePosition.Name,
-                            Price = workerParticipation.ServicePosition.Price
-                        },
-                        MaterialPositions = workerParticipation.MaterialPositions.ConvertAll(orderRecordWorkerParticipationMaterialPosition => new MaterialPositionDto
-                        {
-                            Id = orderRecordWorkerParticipationMaterialPosition.Id,
-                            Name = orderRecordWorkerParticipationMaterialPosition.Name,
-                            Price = orderRecordWorkerParticipationMaterialPosition.Price,
-                            Count = orderRecordWorkerParticipationMaterialPosition.Count,
-                            ClientHas = orderRecordWorkerParticipationMaterialPosition.ClientHas
-                        })
-                    })
                 } : null,
+                WorkerParticipations = order.WorkerParticipations.ConvertAll(workerParticipation => new WorkerParticipationDto
+                {
+                    Id = workerParticipation.ServicePositionId,
+                    Status = workerParticipation.Status.ToString(),
+                    Comment = workerParticipation.Comment,
+                    Worker = workerParticipation.Worker != null ? new WorkerDto
+                    {
+                        Name = workerParticipation.Worker.Name,
+                        Patronymic = workerParticipation.Worker.Patronymic,
+                        Surname = workerParticipation.Worker.Surname
+                    } : null,
+                    ServicePosition = new ServicePositionDto
+                    {
+                        Id = workerParticipation.ServicePosition.Id,
+                        Name = workerParticipation.ServicePosition.Name,
+                        Price = workerParticipation.ServicePosition.Price
+                    },
+                    MaterialPositions = workerParticipation.MaterialPositions.ConvertAll(orderRecordWorkerParticipationMaterialPosition => new MaterialPositionDto
+                    {
+                        Id = orderRecordWorkerParticipationMaterialPosition.Id,
+                        Name = orderRecordWorkerParticipationMaterialPosition.Name,
+                        Price = orderRecordWorkerParticipationMaterialPosition.Price,
+                        Count = orderRecordWorkerParticipationMaterialPosition.Count,
+                        ClientHas = orderRecordWorkerParticipationMaterialPosition.ClientHas
+                    })
+                }),
                 ProductPositions = order.ProductPositions.ConvertAll(productPosition => new ProductPositionDto
                 {
                     Id = productPosition.Id,

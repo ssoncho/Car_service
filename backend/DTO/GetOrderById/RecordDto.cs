@@ -6,7 +6,6 @@
         public int BoxId { get; set; }
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
-        public List<WorkerParticipationDto> WorkerParticipations { get; set; }
     }
 
 }

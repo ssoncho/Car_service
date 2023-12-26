@@ -12,8 +12,5 @@ namespace CarServiceWebConsole.DTO
 
         [JsonProperty("endTime")]
         public DateTime EndTime { get; set; }
-
-        [JsonProperty("workerParticipations")]
-        public List<CreateWorkerParticipationNewOrderDTO> WorkerParticipations { get; set; }
     }
 }

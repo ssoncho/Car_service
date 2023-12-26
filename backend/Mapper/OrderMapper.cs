@@ -109,6 +109,7 @@ namespace CarServiceWebConsole.Mapper
                     Comment = workerParticipation.Comment,
                     Worker = workerParticipation.Worker != null ? new WorkerDto
                     {
+                        Id = workerParticipation.Worker.MobileId,
                         Name = workerParticipation.Worker.Name,
                         Patronymic = workerParticipation.Worker.Patronymic,
                         Surname = workerParticipation.Worker.Surname

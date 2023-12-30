@@ -70,9 +70,22 @@ namespace CarServiceWebConsole.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<GetOrdersResponseDto>>> GetAllOrders()
+        public async Task<ActionResult<List<GetOrdersResponseDto>>> GetOrders([FromQuery] string? status)
         {
-            var orders = await _orderService.GetAllOrdersAsync();
+            var statusMap = new Dictionary<string, Status>
+            {
+                { "not-viewed", Status.NotViewed },
+                { "planned", Status.Planned },
+                { "in-process", Status.InProcess },
+                { "done", Status.Done }
+            };
+
+            List<Order> orders;
+            if (status == null)
+                orders = await _orderService.GetAllOrdersAsync();
+            else
+                orders = await _orderService.GetOrdersByStatusAsync(statusMap[status]);
+
             var ordersDto = orders.ToDto();
             return Ok(ordersDto);
         }

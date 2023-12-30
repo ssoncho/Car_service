@@ -1,5 +1,6 @@
 ﻿using CarServiceWebConsole.DTO;
 using CarServiceWebConsole.DTO.GetOrderById;
+using CarServiceWebConsole.DTO.GetOrders;
 
 namespace CarServiceWebConsole.Mapper
 {
@@ -137,6 +138,42 @@ namespace CarServiceWebConsole.Mapper
                     Count = productPosition.Count
                 })
             };
+        }
+
+        public static GetOrdersResponseDto ToDto(this List<Order> orders)
+        {
+            var orderDtos = new List<GetOrdersOrderDto>();
+
+            foreach (var order in orders)
+            {
+                var orderDto = new GetOrdersOrderDto
+                {
+                    OrderId = order.Id,
+                    CreationDate = order.CreationDate,
+                    CompletionDate = order.CompletionDate,
+                    Status = order.Status.ToString(),
+                    TotalPrice = order.WorkerParticipations
+                                    .Select(wp => wp.ServicePosition)
+                                    .Select(sp => sp.Price)
+                                    .Sum(),
+                    Customer = new GetOrdersCustomerDto
+                    {
+                        Name = order.Car.Customer.Name,
+                        Patronymic = order.Car.Customer.Patronymic,
+                        Surname = order.Car.Customer.Surname
+                    },
+                    Workers = order.WorkerParticipations
+                        .Select(wp => wp.Worker)
+                        .Where(w => w != null)
+                        .GroupBy(w => w.MobileId)
+                        .Select(g => g.First())
+                        .Select(w => new GetOrdersWorkerDto { Name = w.Name, Patronymic = w.Patronymic, Surname = w.Surname})
+                        .ToList()
+            };
+
+                orderDtos.Add(orderDto);
+            }
+            return new GetOrdersResponseDto { Orders = orderDtos };
         }
     }
 }

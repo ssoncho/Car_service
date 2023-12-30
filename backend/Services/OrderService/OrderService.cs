@@ -18,9 +18,17 @@ namespace CarServiceWebConsole.Services.OrderService
             return order;
         }
 
-        public Task<List<Order>> GetAllOrdersAsync()
+        public async Task<List<Order>> GetAllOrdersAsync()
         {
-            throw new NotImplementedException();
+            var orders = await _context.Orders
+                .Include(order => order.Car)
+                    .ThenInclude(car => car.Customer)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.Worker)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.ServicePosition)
+                .ToListAsync();
+            return orders;
         }
 
         public async Task<Order> GetOrderByIdAsync(int id)
@@ -41,15 +49,6 @@ namespace CarServiceWebConsole.Services.OrderService
             if (order == null)
             {
                 throw new NotFoundException("Order", id);
-            }
-
-            if (order?.RecordId != null)
-            {
-                _context.Entry(order)
-                    .Reference(order => order.Record)
-                    .Query()
-                    
-                    .Load();
             }
 
             return order;

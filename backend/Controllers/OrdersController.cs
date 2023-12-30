@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CarServiceWebConsole.DTO;
 using CarServiceWebConsole.DTO.GetOrderById;
+using CarServiceWebConsole.DTO.GetOrders;
 using CarServiceWebConsole.Mapper;
 using CarServiceWebConsole.Services;
 using CarServiceWebConsole.Services.CarService;
@@ -66,6 +67,14 @@ namespace CarServiceWebConsole.Controllers
             {
                 return NotFound();
             }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<List<GetOrdersResponseDto>>> GetAllOrders()
+        {
+            var orders = await _orderService.GetAllOrdersAsync();
+            var ordersDto = orders.ToDto();
+            return Ok(ordersDto);
         }
     }
 }

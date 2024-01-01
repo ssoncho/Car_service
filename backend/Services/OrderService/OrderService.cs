@@ -13,6 +13,57 @@ namespace CarServiceWebConsole.Services.OrderService
         }
         public async Task<Order> CreateOrderAsync(Order order)
         {
+            var existingCarOrDefault = await _context.Orders
+                .Select(o => o.Car)
+                .FirstOrDefaultAsync(car =>
+                car.Vin == order.Car.Vin
+                || car.StateNumber == order.Car.StateNumber);
+            var existingCustomerOrDefault = await _context.Orders
+                .Select(o => o.Car.Customer)
+                .FirstOrDefaultAsync(customer => 
+                customer.PhoneNumber == order.Car.Customer.PhoneNumber
+                || customer.TelegramAlias == order.Car.Customer.TelegramAlias
+                || customer.VkAlias == order.Car.Customer.VkAlias);
+            
+            if (existingCarOrDefault != null
+                && !(existingCarOrDefault.ManufactureYear == order.Car.ManufactureYear
+                    && existingCarOrDefault.Brand == order.Car.Brand
+                    && existingCarOrDefault.Model == order.Car.Model
+                    && existingCarOrDefault.Mileage == order.Car.Mileage
+                    && existingCarOrDefault.Vin == order.Car.Vin
+                    && existingCarOrDefault.StateNumber == order.Car.StateNumber))
+            {
+                throw new CarExistsException();
+            }
+            if (existingCustomerOrDefault != null
+                && !(existingCustomerOrDefault.Name == order.Car.Customer.Name
+                    && existingCustomerOrDefault.Patronymic == order.Car.Customer.Patronymic
+                    && existingCustomerOrDefault.Surname == order.Car.Customer.Surname
+                    && existingCustomerOrDefault.PhoneNumber == order.Car.Customer.PhoneNumber
+                    && existingCustomerOrDefault.TelegramAlias == order.Car.Customer.TelegramAlias
+                    && existingCustomerOrDefault.VkAlias == order.Car.Customer.VkAlias))
+            {
+                throw new CustomerExistsException();
+            }
+
+            if (existingCarOrDefault != null && existingCustomerOrDefault != null)
+            {
+                if (existingCarOrDefault.CustomerId != existingCustomerOrDefault.Id)
+                    throw new CarAlreadyHasCustomerException();
+
+                order.CarId = existingCarOrDefault.Id;
+                order.Car = existingCarOrDefault;
+            }
+            else if (existingCarOrDefault == null && existingCustomerOrDefault != null)
+            {
+                order.Car.CustomerId = existingCustomerOrDefault.Id;
+                order.Car.Customer = existingCustomerOrDefault;
+            }
+            else if (existingCarOrDefault != null && existingCustomerOrDefault == null)
+            {
+                throw new CarAlreadyHasCustomerException();
+            }
+
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
             return order;

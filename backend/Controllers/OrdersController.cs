@@ -49,9 +49,19 @@ namespace CarServiceWebConsole.Controllers
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderDTO orderDto)
         {
             var order = orderDto.FromDto();
-            
-            var result = await _orderService.CreateOrderAsync(order);
-            return Created(new Uri($"{Request.Path}/{result.Id}", UriKind.Relative), new {OrderId = result.Id});
+            try
+            {
+                var result = await _orderService.CreateOrderAsync(order);
+                return Created(new Uri($"{Request.Path}/{result.Id}", UriKind.Relative), new { OrderId = result.Id });
+            }
+            catch (Exception ex) when (
+                ex is CarAlreadyHasCustomerException
+                || ex is CarExistsException
+                || ex is CustomerExistsException
+            )
+            {
+                return Conflict(new {message = ex.Message});
+            }
         }
 
         [HttpGet("{id:int}")]

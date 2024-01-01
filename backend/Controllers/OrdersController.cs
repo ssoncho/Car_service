@@ -52,7 +52,7 @@ namespace CarServiceWebConsole.Controllers
             try
             {
                 var result = await _orderService.CreateOrderAsync(order);
-                return Created(new Uri($"{Request.Path}/{result.Id}", UriKind.Relative), new { OrderId = result.Id });
+                return CreatedAtAction("GetOrderById", new { id = result.Id }, new { OrderId = result.Id });
             }
             catch (Exception ex) when (
                 ex is CarAlreadyHasCustomerException

@@ -13,8 +13,8 @@ namespace CarServiceWebConsole.Mapper
                 SiteId = orderDto.SiteId,
                 ProblemDescription = orderDto.ProblemDescription,
                 Status = (Status)Enum.Parse(typeof(Status), orderDto.Status, true),
-                CreationDate = orderDto.CreationDate,
-                CompletionDate = orderDto.CompletionDate,
+                CreationDate = DateTime.UtcNow,
+                CompletionDate = null,
                 Record = orderDto.Record != null ? new Record
                 {
                     BoxId = orderDto.Record.BoxId,

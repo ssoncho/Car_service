@@ -8,8 +8,8 @@ namespace CarServiceWebConsole.Models
         public int? SiteId { get; set; }
         public string ProblemDescription { get; set; }
         public Status Status { get; set; }
-        public DateOnly CreationDate { get; set; }
-        public DateOnly? CompletionDate { get; set; }
+        public DateTime CreationDate { get; set; }
+        public DateTime? CompletionDate { get; set; }
 
         public int? RecordId { get; set; }
         public Record? Record { get; set; }

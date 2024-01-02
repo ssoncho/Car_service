@@ -6,8 +6,8 @@
     public int? SiteId { get; set; }
     public string ProblemDescription { get; set; }
     public string Status { get; set; }
-    public DateOnly CreationDate { get; set; }
-    public DateOnly? CompletionDate { get; set; }
+    public DateTime CreationDate { get; set; }
+    public DateTime? CompletionDate { get; set; }
     public CarDto Car { get; set; }
     public CustomerDto Customer { get; set; }
     public RecordDto? Record { get; set; }

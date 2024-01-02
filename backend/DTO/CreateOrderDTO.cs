@@ -13,12 +13,6 @@ namespace CarServiceWebConsole.DTO
         [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonProperty("creationDate")]
-        public DateOnly CreationDate { get; set; }
-
-        [JsonProperty("completionDate")]
-        public DateOnly? CompletionDate { get; set; }
-
         [JsonProperty("car")]
         public CreateCarDTO Car { get; set; }
 

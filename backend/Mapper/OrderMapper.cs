@@ -18,8 +18,8 @@ namespace CarServiceWebConsole.Mapper
                 Record = orderDto.Record != null ? new Record
                 {
                     BoxId = orderDto.Record.BoxId,
-                    StartTime = orderDto.Record.StartTime,
-                    EndTime = orderDto.Record.EndTime
+                    StartTime = orderDto.Record.StartTime.ToUniversalTime(),
+                    EndTime = orderDto.Record.EndTime.ToUniversalTime()
                 } : null,
                 Car = new Car
                 {
@@ -74,8 +74,8 @@ namespace CarServiceWebConsole.Mapper
                 SiteId = order.SiteId,
                 ProblemDescription = order.ProblemDescription,
                 Status = order.Status.ToString(),
-                CreationDate = order.CreationDate,
-                CompletionDate = order.CompletionDate,
+                CreationDate = order.CreationDate.ToLocalTime(),
+                CompletionDate = order.CompletionDate != null ? order.CompletionDate.GetValueOrDefault().ToLocalTime() : null,
                 Car = new CarDto
                 {
                     Id = order.Car.Id,
@@ -100,8 +100,8 @@ namespace CarServiceWebConsole.Mapper
                 {
                     Id = order.Record.Id,
                     BoxId = order.Record.BoxId,
-                    StartTime = order.Record.StartTime,
-                    EndTime = order.Record.EndTime,
+                    StartTime = order.Record.StartTime.ToLocalTime(),
+                    EndTime = order.Record.EndTime.ToLocalTime(),
                 } : null,
                 WorkerParticipations = order.WorkerParticipations.ConvertAll(workerParticipation => new WorkerParticipationDto
                 {
@@ -149,8 +149,8 @@ namespace CarServiceWebConsole.Mapper
                 var orderDto = new GetOrdersOrderDto
                 {
                     OrderId = order.Id,
-                    CreationDate = order.CreationDate,
-                    CompletionDate = order.CompletionDate,
+                    CreationDate = order.CreationDate.ToLocalTime(),
+                    CompletionDate = order.CompletionDate != null ? order.CompletionDate.GetValueOrDefault().ToLocalTime() : null,
                     Status = order.Status.ToString(),
                     TotalPrice = order.WorkerParticipations
                                     .Select(wp => wp.ServicePosition)

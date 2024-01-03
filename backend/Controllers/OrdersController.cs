@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CarServiceWebConsole.DTO;
+using CarServiceWebConsole.DTO.AddOrderFromSite;
 using CarServiceWebConsole.DTO.GetOrderById;
 using CarServiceWebConsole.DTO.GetOrders;
 using CarServiceWebConsole.Mapper;
@@ -43,6 +44,25 @@ namespace CarServiceWebConsole.Controllers
             _servicePositionService = servicePositionService;
             _workerParticipationService = workerParticipationService;
             _workerService = workerService;
+        }
+
+        [HttpPost("FromSite")]
+        public async Task<IActionResult> AddOrderFromSiteAsync([FromBody] AddOrderFromSiteDto orderDto)
+        {
+            var order = orderDto.FromDto();
+            try
+            {
+                var result = await _orderService.CreateOrderAsync(order);
+                return CreatedAtAction("GetOrderById", new { id = result.Id }, new { OrderId = result.Id });
+            }
+            catch (Exception ex) when (
+                ex is CarAlreadyHasCustomerException
+                || ex is CarExistsException
+                || ex is CustomerExistsException
+            )
+            {
+                return Conflict(new { message = ex.Message });
+            }
         }
 
         [HttpPost]

@@ -13,13 +13,11 @@ namespace CarServiceWebConsole.Services.OrderService
         }
         public async Task<Order> CreateOrderAsync(Order order)
         {
-            var existingCarOrDefault = await _context.Orders
-                .Select(o => o.Car)
+            var existingCarOrDefault = await _context.Cars
                 .FirstOrDefaultAsync(car =>
                 car.Vin == order.Car.Vin
                 || car.StateNumber == order.Car.StateNumber);
-            var existingCustomerOrDefault = await _context.Orders
-                .Select(o => o.Car.Customer)
+            var existingCustomerOrDefault = await _context.Customers
                 .FirstOrDefaultAsync(customer => 
                 customer.PhoneNumber == order.Car.Customer.PhoneNumber
                 || customer.TelegramAlias == order.Car.Customer.TelegramAlias

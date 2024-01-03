@@ -1,4 +1,5 @@
 ﻿using CarServiceWebConsole.DTO;
+using CarServiceWebConsole.DTO.AddOrderFromSite;
 using CarServiceWebConsole.DTO.GetOrderById;
 using CarServiceWebConsole.DTO.GetOrders;
 
@@ -63,6 +64,39 @@ namespace CarServiceWebConsole.Mapper
                     Price = productPositionDto.Price,
                     Count = productPositionDto.Count
                 })
+            };
+        }
+
+        public static Order FromDto(this AddOrderFromSiteDto orderDto)
+        {
+            return new Order
+            {
+                SiteId = orderDto.SiteId,
+                ProblemDescription = orderDto.ProblemDescription,
+                Status = Status.NotViewed,
+                CreationDate = orderDto.CreationDate,
+                CompletionDate = orderDto.CompletionDate,
+                Car = new Car
+                {
+                    Mileage = orderDto.Car.Mileage,
+                    Brand = orderDto.Car.Brand,
+                    Vin = orderDto.Car.Vin,
+                    StateNumber = orderDto.Car.StateNumber,
+                    Model = orderDto.Car.Model,
+                    ManufactureYear = orderDto.Car.ManufactureYear,
+                    Customer = new Customer 
+                    {
+                        Name = orderDto.Customer.Name,
+                        Patronymic = orderDto.Customer.Patronymic,
+                        Surname = orderDto.Customer.Surname,
+                        PhoneNumber = orderDto.Customer.PhoneNumber,
+                        TelegramAlias = orderDto.Customer.TelegramAlias,
+                        VkAlias = null
+                    }
+                },
+                Record = null,
+                WorkerParticipations = new List<WorkerParticipation>(),
+                ProductPositions = new List<ProductPosition>()
             };
         }
 

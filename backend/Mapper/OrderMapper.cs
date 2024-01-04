@@ -1,5 +1,5 @@
-﻿using CarServiceWebConsole.DTO;
-using CarServiceWebConsole.DTO.AddOrderFromSite;
+﻿using CarServiceWebConsole.DTO.AddOrderFromSite;
+using CarServiceWebConsole.DTO.CreateOrder;
 using CarServiceWebConsole.DTO.GetOrderById;
 using CarServiceWebConsole.DTO.GetOrders;
 

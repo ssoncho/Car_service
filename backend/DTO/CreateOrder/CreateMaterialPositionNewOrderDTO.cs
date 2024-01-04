@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CarServiceWebConsole.DTO
+namespace CarServiceWebConsole.DTO.CreateOrder
 {
     public class CreateMaterialPositionNewOrderDTO
     {

@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CarServiceWebConsole.DTO
+namespace CarServiceWebConsole.DTO.CreateOrder
 {
     public class CreateCustomerDTO
     {
@@ -17,9 +17,9 @@ namespace CarServiceWebConsole.DTO
         public string PhoneNumber { get; set; }
 
         [JsonProperty("telegramAlias")]
-        public string TelegramAlias { get; set; }
+        public string? TelegramAlias { get; set; }
 
         [JsonProperty("vkAlias")]
-        public string VkAlias { get; set; }
+        public string? VkAlias { get; set; }
     }
 }

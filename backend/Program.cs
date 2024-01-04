@@ -7,6 +7,7 @@ using CarServiceWebConsole.Services.OrderService;
 using CarServiceWebConsole.Services.ProductPositionService;
 using CarServiceWebConsole.Services.RecordService;
 using CarServiceWebConsole.Services.ServicePositionService;
+using CarServiceWebConsole.Services.ServiceService;
 using CarServiceWebConsole.Services.WorkerParticipationService;
 using CarServiceWebConsole.Services.WorkerService;
 using Microsoft.EntityFrameworkCore;
@@ -47,6 +48,7 @@ builder.Services.AddScoped<IRecordService, RecordService>();
 builder.Services.AddScoped<IServicePositionService, ServicePositionService>();
 builder.Services.AddScoped<IWorkerParticipationService, WorkerParticipationService>();
 builder.Services.AddScoped<IWorkerService, WorkerService>();
+builder.Services.AddScoped<IServiceService, ServiceService>();
 
 builder.Services.AddDbContext<DataContext>(
     options => options.UseNpgsql(builder.Configuration.GetConnectionString("CarServiceDb"))

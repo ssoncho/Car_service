@@ -11,7 +11,7 @@ namespace CarServiceWebConsole.DTO.AddOrderFromSite
         public string ProblemDescription { get; set; }
 
         [JsonProperty("work")]
-        public string Work { get; set; }
+        public string? Work { get; set; }
 
         [JsonProperty("car")]
         public AddOrderCarDto Car { get; set; }

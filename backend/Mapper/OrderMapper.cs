@@ -76,7 +76,7 @@ namespace CarServiceWebConsole.Mapper
                     Mileage = orderDto.Car.Mileage,
                     Vin = orderDto.Car.Vin,
                     StateNumber = orderDto.Car.StateNumber,
-                    Customer = new Customer 
+                    Customer = new Customer
                     {
                         Name = orderDto.Customer.Name,
                         Patronymic = orderDto.Customer.Patronymic,
@@ -87,7 +87,13 @@ namespace CarServiceWebConsole.Mapper
                     }
                 },
                 Record = null,
-                WorkerParticipations = new List<WorkerParticipation>(),
+                WorkerParticipations = orderDto.Work == null ? new List<WorkerParticipation>()
+                : new(){ new WorkerParticipation {
+                    ServicePosition = new ServicePosition { Name = orderDto.Work },
+                    Status = Status.NotViewed,
+                    Comment = "",
+                    MaterialPositions = new List<MaterialPosition>()
+                } },
                 ProductPositions = new List<ProductPosition>()
             };
         }

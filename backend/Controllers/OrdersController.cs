@@ -12,6 +12,7 @@ using CarServiceWebConsole.Services.OrderService;
 using CarServiceWebConsole.Services.ProductPositionService;
 using CarServiceWebConsole.Services.RecordService;
 using CarServiceWebConsole.Services.ServicePositionService;
+using CarServiceWebConsole.Services.ServiceService;
 using CarServiceWebConsole.Services.WorkerParticipationService;
 using CarServiceWebConsole.Services.WorkerService;
 using Microsoft.AspNetCore.Http;
@@ -32,8 +33,9 @@ namespace CarServiceWebConsole.Controllers
         private readonly IServicePositionService _servicePositionService;
         private readonly IWorkerParticipationService _workerParticipationService;
         private readonly IWorkerService _workerService;
+        private readonly IServiceService _serviceService;
 
-        public OrdersController(IOrderService orderService, ICarService carService, ICustomerService customerService, IMaterialPositionService materialPositionService, IProductPositionService productPositionService, IRecordService recordService, IServicePositionService servicePositionService, IWorkerParticipationService workerParticipationService, IWorkerService workerService)
+        public OrdersController(IOrderService orderService, ICarService carService, ICustomerService customerService, IMaterialPositionService materialPositionService, IProductPositionService productPositionService, IRecordService recordService, IServicePositionService servicePositionService, IWorkerParticipationService workerParticipationService, IWorkerService workerService, IServiceService serviceService)
         {
             _orderService = orderService;
             _carService = carService;
@@ -44,16 +46,23 @@ namespace CarServiceWebConsole.Controllers
             _servicePositionService = servicePositionService;
             _workerParticipationService = workerParticipationService;
             _workerService = workerService;
+            _serviceService = serviceService;
         }
 
         [HttpPost("FromSite")]
         public async Task<IActionResult> AddOrderFromSiteAsync([FromBody] AddOrderFromSiteDto orderDto)
         {
             var order = orderDto.FromDto();
+            var workerParticipation = order.WorkerParticipations.FirstOrDefault();
+            if (workerParticipation != null)
+            {
+                var servicePrice = await _serviceService.GetServicePriceOrDefaultByName(workerParticipation.ServicePosition.Name);
+                workerParticipation.ServicePosition.Price = servicePrice;
+            }
             try
             {
                 var result = await _orderService.CreateOrderAsync(order);
-                return CreatedAtAction("GetOrderById", new { id = result.Id }, new { OrderId = result.Id });
+                return this.StatusCode(StatusCodes.Status201Created);
             }
             catch (Exception ex) when (
                 ex is CarAlreadyHasCustomerException
@@ -61,7 +70,7 @@ namespace CarServiceWebConsole.Controllers
                 || ex is CustomerExistsException
             )
             {
-                return Conflict(new { message = ex.Message });
+                return this.StatusCode(StatusCodes.Status409Conflict, new { message = ex.Message });
             }
         }
 

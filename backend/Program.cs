@@ -10,6 +10,7 @@ using CarServiceWebConsole.Services.ServicePositionService;
 using CarServiceWebConsole.Services.WorkerParticipationService;
 using CarServiceWebConsole.Services.WorkerService;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Serialization;
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 var builder = WebApplication.CreateBuilder(args);
@@ -30,7 +31,9 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddControllers().AddNewtonsoftJson(
     options => options.SerializerSettings.ContractResolver 
-    = new Newtonsoft.Json.Serialization.DefaultContractResolver());
+    = new Newtonsoft.Json.Serialization.DefaultContractResolver {
+        NamingStrategy = new CamelCaseNamingStrategy()
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

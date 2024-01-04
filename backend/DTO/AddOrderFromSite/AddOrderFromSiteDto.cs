@@ -10,11 +10,8 @@ namespace CarServiceWebConsole.DTO.AddOrderFromSite
         [JsonProperty("description")]
         public string ProblemDescription { get; set; }
 
-        [JsonProperty("createdAt")]
-        public DateTime CreationDate { get; set; }
-
-        [JsonProperty("completedAt")]
-        public DateTime? CompletionDate { get; set; }
+        [JsonProperty("work")]
+        public string Work { get; set; }
 
         [JsonProperty("car")]
         public AddOrderCarDto Car { get; set; }

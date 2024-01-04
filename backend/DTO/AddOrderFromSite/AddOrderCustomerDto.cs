@@ -7,16 +7,16 @@ namespace CarServiceWebConsole.DTO.AddOrderFromSite
         [JsonProperty("name")]
         public string Name { get; set; }
 
-        [JsonProperty("patronymic")]
+        [JsonProperty("secondName")]
         public string? Patronymic { get; set; }
 
         [JsonProperty("surname")]
         public string Surname { get; set; }
 
-        [JsonProperty("phoneNumber")]
+        [JsonProperty("phone")]
         public string PhoneNumber { get; set; }
 
-        [JsonProperty("telegramAlias")]
+        [JsonProperty("telegram")]
         public string TelegramAlias { get; set; }
     }
 }

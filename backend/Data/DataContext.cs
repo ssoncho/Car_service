@@ -18,13 +18,25 @@ namespace CarServiceWebConsole.Data
             modelBuilder.Entity<WorkerParticipation>()
                 .Property(w => w.Status)
                 .HasConversion<string>();
-            modelBuilder.Entity<Order>()
-                .Property(o => o.Status)
-                .HasConversion<string>();
+
+            var order = modelBuilder.Entity<Order>();
+            order.Property(o => o.Status)
+                 .HasConversion<string>()
+                 .HasDefaultValue(Status.NotViewed);
+            order.Property(o => o.CreationDate)
+                .HasDefaultValueSql("NOW()");
+            order.Property(o => o.CompletionDate)
+                .HasDefaultValue(null);
 
             var car = modelBuilder.Entity<Car>();
-            car.Property(c => c.Brand).HasMaxLength(10);
-            car.Property(c => c.Model).HasMaxLength(30);
+            car.Property(c => c.Brand)
+                .HasMaxLength(10)
+                .HasDefaultValue(null);
+            car.Property(c => c.Model)
+                .HasMaxLength(30)
+                .HasDefaultValue(null);
+            car.Property(c => c.ManufactureYear)
+                .HasDefaultValue(null);
             car.Property(c => c.Vin).HasColumnType("char(17)");
             car.Property(c => c.StateNumber).HasColumnType("varchar(9)");
             car.HasIndex(c => c.StateNumber).IsUnique();
@@ -35,8 +47,12 @@ namespace CarServiceWebConsole.Data
             customer.Property(c => c.Patronymic).HasMaxLength(20);
             customer.Property(c => c.Surname).HasMaxLength(20);
             customer.Property(c => c.PhoneNumber).HasMaxLength(20);
-            customer.Property(c => c.TelegramAlias).HasMaxLength(20);
-            customer.Property(c => c.VkAlias).HasMaxLength(20);
+            customer.Property(c => c.TelegramAlias)
+                .HasMaxLength(20)
+                .HasDefaultValue(null);
+            customer.Property(c => c.VkAlias)
+                .HasMaxLength(20)
+                .HasDefaultValue(null);
             customer.HasIndex(c => c.PhoneNumber).IsUnique();
             customer.HasIndex(c => c.TelegramAlias).IsUnique();
             customer.HasIndex(c => c.VkAlias).IsUnique();

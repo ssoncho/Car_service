@@ -14,8 +14,6 @@ namespace CarServiceWebConsole.Mapper
                 SiteId = orderDto.SiteId,
                 ProblemDescription = orderDto.ProblemDescription,
                 Status = (Status)Enum.Parse(typeof(Status), orderDto.Status, true),
-                CreationDate = DateTime.UtcNow,
-                CompletionDate = null,
                 Record = orderDto.Record != null ? new Record
                 {
                     BoxId = orderDto.Record.BoxId,
@@ -73,17 +71,11 @@ namespace CarServiceWebConsole.Mapper
             {
                 SiteId = orderDto.SiteId,
                 ProblemDescription = orderDto.ProblemDescription,
-                Status = Status.NotViewed,
-                CreationDate = orderDto.CreationDate,
-                CompletionDate = orderDto.CompletionDate,
                 Car = new Car
                 {
                     Mileage = orderDto.Car.Mileage,
-                    Brand = orderDto.Car.Brand,
                     Vin = orderDto.Car.Vin,
                     StateNumber = orderDto.Car.StateNumber,
-                    Model = orderDto.Car.Model,
-                    ManufactureYear = orderDto.Car.ManufactureYear,
                     Customer = new Customer 
                     {
                         Name = orderDto.Customer.Name,

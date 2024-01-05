@@ -207,13 +207,5 @@ namespace CarServiceWebConsole.Mapper
             }
             return new GetOrdersResponseDto { Orders = orderDtos };
         }
-
-        public static GetOrdersIdsByTgAliasDto ToDto(this List<int> ordersIds)
-        {
-            return new GetOrdersIdsByTgAliasDto
-            {
-                OrdersIds = ordersIds
-            };
-        }
     }
 }

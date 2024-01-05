@@ -128,5 +128,13 @@ namespace CarServiceWebConsole.Controllers
             var ordersDto = orders.ToDto();
             return Ok(ordersDto);
         }
+
+        [HttpGet("Telegram")]
+        public async Task<ActionResult<List<int>>> GetOrdersByTgAlias([FromQuery] string tgAlias)
+        {
+            var ordersIds = await _orderService.GetOrdersIdsByTgAliasAsync($"@{tgAlias}");
+            var ordersIdsDto = ordersIds.ToDto();
+            return Ok(ordersIdsDto);
+        }
     }
 }

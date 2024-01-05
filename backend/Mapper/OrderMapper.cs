@@ -2,6 +2,7 @@
 using CarServiceWebConsole.DTO.CreateOrder;
 using CarServiceWebConsole.DTO.GetOrderById;
 using CarServiceWebConsole.DTO.GetOrders;
+using CarServiceWebConsole.DTO.GetOrdersIdsByTgAlias;
 
 namespace CarServiceWebConsole.Mapper
 {
@@ -11,7 +12,6 @@ namespace CarServiceWebConsole.Mapper
         {
             return new Order
             {
-                SiteId = orderDto.SiteId,
                 ProblemDescription = orderDto.ProblemDescription,
                 Status = (Status)Enum.Parse(typeof(Status), orderDto.Status, true),
                 Record = orderDto.Record != null ? new Record
@@ -206,6 +206,14 @@ namespace CarServiceWebConsole.Mapper
                 orderDtos.Add(orderDto);
             }
             return new GetOrdersResponseDto { Orders = orderDtos };
+        }
+
+        public static GetOrdersIdsByTgAliasDto ToDto(this List<int> ordersIds)
+        {
+            return new GetOrdersIdsByTgAliasDto
+            {
+                OrdersIds = ordersIds
+            };
         }
     }
 }

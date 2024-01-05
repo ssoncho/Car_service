@@ -116,5 +116,16 @@ namespace CarServiceWebConsole.Services.OrderService
 
             return order;
         }
+
+        public async Task<List<int>> GetOrdersIdsByTgAliasAsync(string tgAlias)
+        {
+            var ordersIds = await _context.Orders
+                .Where(o => o.Car.Customer.TelegramAlias == tgAlias)
+                .Select(o => o.Id)
+                .ToListAsync();
+            if (ordersIds == null)
+                return new List<int>();
+            return ordersIds;
+        }
     }
 }

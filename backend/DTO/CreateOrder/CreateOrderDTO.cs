@@ -4,9 +4,6 @@ namespace CarServiceWebConsole.DTO.CreateOrder
 {
     public class CreateOrderDTO
     {
-        [JsonProperty("siteId")]
-        public int? SiteId { get; set; }
-
         [JsonProperty("problemDescription")]
         public string ProblemDescription { get; set; }
 

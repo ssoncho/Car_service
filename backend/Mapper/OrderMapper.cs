@@ -40,7 +40,12 @@ namespace CarServiceWebConsole.Mapper
                 },
                 WorkerParticipations = orderDto.WorkerParticipations.ConvertAll(workerParticipationDto => new WorkerParticipation
                 {
-                    WorkerId = workerParticipationDto.WorkerId,
+                    Worker = workerParticipationDto.Worker != null ? new Worker
+                    {
+                        Name = workerParticipationDto.Worker.Name,
+                        Patronymic = workerParticipationDto.Worker.Patronymic,
+                        Surname = workerParticipationDto.Worker.Surname
+                    } : null,
                     Status = (Status)Enum.Parse(typeof(Status), workerParticipationDto.Status, true),
                     MaterialPositions = workerParticipationDto.MaterialPositions.ConvertAll(materialPositionDto => new MaterialPosition
                     {

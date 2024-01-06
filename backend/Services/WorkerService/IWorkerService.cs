@@ -2,6 +2,6 @@
 {
     public interface IWorkerService
     {
-        Worker GetWorkerById(int id);
+        Task<Worker> GetWorkerByFullName(string name, string? patronymic, string surname);
     }
 }

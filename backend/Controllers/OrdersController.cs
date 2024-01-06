@@ -78,6 +78,23 @@ namespace CarServiceWebConsole.Controllers
         public async Task<IActionResult> CreateOrderAsync([FromBody] CreateOrderDTO orderDto)
         {
             var order = orderDto.FromDto();
+            var workerParticipationsWithWorkers = order.WorkerParticipations
+                .Where(wp => wp.Worker != null);
+            try
+            {
+                foreach (var workerParticipation in workerParticipationsWithWorkers)
+                {
+                    var currentWorker = workerParticipation.Worker;
+                    var existingWorker = await _workerService.GetWorkerByFullName(currentWorker.Name, currentWorker.Patronymic, currentWorker.Surname);
+                    workerParticipation.WorkerId = existingWorker.MobileId;
+                    workerParticipation.Worker = existingWorker;
+                }
+            }
+            catch (NotFoundException ex)
+            {
+                return NotFound(new { message = ex.Message });
+            }
+
             try
             {
                 var result = await _orderService.CreateOrderAsync(order);

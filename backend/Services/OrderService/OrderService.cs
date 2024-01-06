@@ -1,4 +1,5 @@
 ﻿using CarServiceWebConsole.Data;
+using CarServiceWebConsole.DTO.GetOrders;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarServiceWebConsole.Services.OrderService

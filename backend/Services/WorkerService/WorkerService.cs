@@ -1,4 +1,5 @@
 ﻿using CarServiceWebConsole.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace CarServiceWebConsole.Services.WorkerService
 {
@@ -11,9 +12,14 @@ namespace CarServiceWebConsole.Services.WorkerService
             _context = context;
         }
 
-        public Worker GetWorkerById(int id)
+        public async Task<Worker> GetWorkerByFullName(string name, string? patronymic, string surname)
         {
-            var worker = _context.Workers.Find(id);
+            var worker = await _context.Workers.FirstOrDefaultAsync(w => 
+                w.Name == name 
+                && w.Patronymic == patronymic 
+                && w.Surname == surname);
+            if (worker == null)
+                throw new NotFoundException("Worker", $"{name} {patronymic} {surname}");
             return worker;
         }
     }

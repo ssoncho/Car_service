@@ -4,8 +4,8 @@ namespace CarServiceWebConsole.DTO.CreateOrder
 {
     public class CreateWorkerParticipationNewOrderDTO
     {
-        [JsonProperty("workerId")]
-        public int? WorkerId { get; set; }
+        [JsonProperty("worker")]
+        public CreateWorkerDto? Worker { get; set; }
         [JsonProperty("status")]
         public string Status { get; set; }
 

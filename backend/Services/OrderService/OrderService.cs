@@ -77,6 +77,9 @@ namespace CarServiceWebConsole.Services.OrderService
                         .ThenInclude(wp => wp.Worker)
                 .Include(order => order.WorkerParticipations)
                         .ThenInclude(wp => wp.ServicePosition)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.MaterialPositions)
+                .Include(order => order.ProductPositions)
                 .ToListAsync();
             return orders;
         }
@@ -90,6 +93,9 @@ namespace CarServiceWebConsole.Services.OrderService
                         .ThenInclude(wp => wp.Worker)
                 .Include(order => order.WorkerParticipations)
                         .ThenInclude(wp => wp.ServicePosition)
+                .Include(order => order.WorkerParticipations)
+                        .ThenInclude(wp => wp.MaterialPositions)
+                .Include(order => order.ProductPositions)
                 .Where(order => order.Status == status)
                 .ToListAsync();
             return orders;

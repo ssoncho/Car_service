@@ -106,7 +106,6 @@ namespace CarServiceWebConsole.Mapper
             return new GetOrderByIdResponseDto
             {
                 OrderId = order.Id,
-                SiteId = order.SiteId,
                 ProblemDescription = order.ProblemDescription,
                 Status = order.Status.ToString(),
                 CreationDate = order.CreationDate.ToLocalTime(),
@@ -171,7 +170,8 @@ namespace CarServiceWebConsole.Mapper
                     Name = productPosition.Name,
                     Price = productPosition.Price,
                     Count = productPosition.Count
-                })
+                }),
+                TotalPrice = GetTotalPrice(order)
             };
         }
 
@@ -187,10 +187,7 @@ namespace CarServiceWebConsole.Mapper
                     CreationDate = order.CreationDate.ToLocalTime(),
                     CompletionDate = order.CompletionDate != null ? order.CompletionDate.GetValueOrDefault().ToLocalTime() : null,
                     Status = order.Status.ToString(),
-                    TotalPrice = order.WorkerParticipations
-                                    .Select(wp => wp.ServicePosition)
-                                    .Select(sp => sp.Price)
-                                    .Sum(),
+                    TotalPrice = GetTotalPrice(order),
                     Customer = new GetOrdersCustomerDto
                     {
                         Name = order.Car.Customer.Name,
@@ -209,6 +206,24 @@ namespace CarServiceWebConsole.Mapper
                 orderDtos.Add(orderDto);
             }
             return new GetOrdersResponseDto { Orders = orderDtos };
+        }
+
+        private static int GetTotalPrice(Order order)
+        {
+            Console.WriteLine(order.Id);
+            var materialsTotalSum = 0;
+            var servicesTotalSum = 0;
+            var productsTotalSum = order.ProductPositions
+                .Select(p => p.Price)
+                .Sum(); ;
+            foreach (var workerParticipation in order.WorkerParticipations)
+            {
+                materialsTotalSum += workerParticipation.MaterialPositions
+                    .Select(m => m.ClientHas ? 0 : m.Price * m.Count)
+                    .Sum();
+                servicesTotalSum += workerParticipation.ServicePosition.Price;
+            }
+            return materialsTotalSum + servicesTotalSum + productsTotalSum;
         }
     }
 }

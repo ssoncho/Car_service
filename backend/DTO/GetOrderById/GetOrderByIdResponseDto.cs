@@ -3,7 +3,6 @@
     public class GetOrderByIdResponseDto
 {
     public int OrderId { get; set; }
-    public int? SiteId { get; set; }
     public string ProblemDescription { get; set; }
     public string Status { get; set; }
     public DateTime CreationDate { get; set; }
@@ -13,6 +12,7 @@
     public RecordDto? Record { get; set; }
     public List<WorkerParticipationDto> WorkerParticipations { get; set; }
     public List<ProductPositionDto> ProductPositions { get; set; }
+    public int TotalPrice { get; set; }
 }
 
 }

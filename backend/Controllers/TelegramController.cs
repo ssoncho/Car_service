@@ -21,7 +21,7 @@ namespace CarServiceWebConsole.Controllers
         [HttpGet]
         public async Task<ActionResult<List<int>>> GetOrdersByTgAlias([FromQuery] string tgAlias)
         {
-            var ordersIds = await _orderService.GetOrdersIdsByTgAliasAsync($"@{tgAlias}");
+            var ordersIds = await _orderService.GetOrdersIdsByTgAliasAsync($"{tgAlias}");
             var ordersIdsDto = ordersIds.ToDto();
             return Ok(ordersIdsDto);
         }

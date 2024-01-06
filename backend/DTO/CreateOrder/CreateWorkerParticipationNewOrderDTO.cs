@@ -9,9 +9,6 @@ namespace CarServiceWebConsole.DTO.CreateOrder
         [JsonProperty("status")]
         public string Status { get; set; }
 
-        [JsonProperty("comment")]
-        public string Comment { get; set; }
-
         [JsonProperty("materialPositions")]
         public List<CreateMaterialPositionNewOrderDTO> MaterialPositions { get; set; }
 

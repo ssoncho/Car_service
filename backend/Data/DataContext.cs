@@ -15,9 +15,12 @@ namespace CarServiceWebConsole.Data
             modelBuilder.Entity<Worker>()
                 .Property(w => w.Position)
                 .HasConversion<string>();
-            modelBuilder.Entity<WorkerParticipation>()
-                .Property(w => w.Status)
+
+            var workerParticipation = modelBuilder.Entity<WorkerParticipation>();
+            workerParticipation.Property(wp => wp.Status)
                 .HasConversion<string>();
+            workerParticipation.Property(wp => wp.Comment)
+                .HasDefaultValue(String.Empty);
 
             var order = modelBuilder.Entity<Order>();
             order.Property(o => o.Status)

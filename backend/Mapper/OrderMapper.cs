@@ -42,7 +42,6 @@ namespace CarServiceWebConsole.Mapper
                 {
                     WorkerId = workerParticipationDto.WorkerId,
                     Status = (Status)Enum.Parse(typeof(Status), workerParticipationDto.Status, true),
-                    Comment = workerParticipationDto.Comment,
                     MaterialPositions = workerParticipationDto.MaterialPositions.ConvertAll(materialPositionDto => new MaterialPosition
                     {
                         Name = materialPositionDto.Name,
@@ -91,7 +90,6 @@ namespace CarServiceWebConsole.Mapper
                 : new(){ new WorkerParticipation {
                     ServicePosition = new ServicePosition { Name = orderDto.Work },
                     Status = Status.NotViewed,
-                    Comment = "",
                     MaterialPositions = new List<MaterialPosition>()
                 } },
                 ProductPositions = new List<ProductPosition>()

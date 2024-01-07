@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Веб-консоль</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+        <div class="container">
+            <nav class="header-line">
+                <a class="nav-item" href="#">Просмотр заявок</a>
+                <a class="nav-item active" href="#">Добавить заявку</a>
+                <a class="nav-item" href="#">Управление ресурсами</a>
+                <div class="profile">
+                    <a class="name">Иванов Иван Иванович</a>
+                    <div align="right"><a class="exit" href="#">Выйти</a></div>                    
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="col">
+            <div class="first-col">
+                <div class="container-1">
+                    <div><a class="name">Заявка №2</a></div>
+                    <a class="status1">создается</a>
+                    <a class="save" href="#" id="saveButton">сохранить</a>
+                    <div class="first-block"><a class="status">в работе</a></div>
+                </div>
+
+                <div class="container-2">
+                    <div><p class="font-style1">ФИО клиента:</p></div>
+                    <form action="" class="form" id="form_1">
+                        <div class="form__group">
+                            <input class="form__input1" id="nameOfPerson">
+                        </div>
+                    </form>
+                    <div>                       
+                        <p><form action="" class="form" id="form_2">
+                            <label class="font-style1">Телефон: <input class="form__input3" id="phoneNumber"></label>
+                        </form></p>                       
+                    </div>
+                    <div>                       
+                        <p><form action="" class="form" id="form_2">
+                            <label class="font-style1">Телеграм: <input class="form__input16" id="tgAlias"></label>
+                        </form></p>                       
+                    </div>
+                    <div>                       
+                        <p><form action="" class="form" id="form_2">
+                            <label class="font-style1">ВК: <input class="form__input3" id="vkAlias"></label>
+                        </form></p>                       
+                    </div>
+                </div>
+
+                <div class="container-3">
+                    <div><p class="font-style1">Модель автомобиля:</p></div>
+                    <form action="" class="form" id="form_3">
+                        <div class="form__group">
+                            <input class="form__input4" id="carModel">
+                        </div>
+                    </form>
+                    <div>
+                        <div><p class="font-style1">Регистрационный номер:</p></div>
+                        <form action="" class="form" id="form_4">
+                            <div class="form__group">
+                                <input class="form__input5" id="registrationNumber">
+                            </div>
+                        </form>                           
+                    </div>
+                    <div>
+                        <p><form action="" class="form" id="form_5">
+                            <label class="font-style1">VIN-номер: <input class="form__input6" id="vinNumber"></label>
+                        </form></p>   
+                    </div>
+                    <div>
+                        <p><form action="" class="form" id="form_6">
+                            <label class="font-style1">Год выпуска: <input class="form__input7" id="year"></label>
+                        </form></p>   
+                    </div>
+                    <div>
+                        <p><form action="" class="form" id="form_7">
+                            <label class="font-style1">Пробег: <input class="form__input8" id="mileAge"> <span class="font-style2">км</span></label>
+                        </form></p>   
+                    </div>
+                </div>
+            </div>
+
+            <div class="second-col" id="second-col">
+                <div id="createServiceList">
+                    <div class="createService" id="createService">
+                        <div style="display: flex;" class="container-5">
+                            <div class="container-5-1" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 15px;"; width: 350px;">
+                                <div class="container-5-1-1">
+                                    <form action="" class="form" id="form_8">
+                                        <div class="form__group">
+                                            <input type="text" placeholder="Требуемая услуга" class="form__input2 requiredService" id="requiredService">
+                                        </div>
+                                    </form>
+                                    <form action="" class="form" id="form_9">
+                                        <div class="form__group">
+                                            <input type="text" placeholder="Стоимость услуги" class="form__input9 costOfService" id="costOfService"><span class="design-of-price1"> руб.</span>
+                                        </div>
+                                    </form>                                                        
+                                </div>
+                                <div class="container-5-1-2">
+                                    <div class="using"><p><a class="font-style1"> Использовать:</a></p></div>
+                                    <div class="add-product">
+                                        <a class="button1" href="#">Добавить товар</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="container-5-2" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 3px;" >
+                                <div align="right" class="container-5-2-0"><a class="font-style3">поступил</a></div>
+                                <div class="container-5-2-1">
+                                    <div><p class="font-style1">Ответственный механик:</p></div>
+                                    <form action="" class="form1">
+                                        <div class="form__group">
+                                            <input class="form__input12 mechanic" id="mechanic">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>              
+                    </div>             
+                </div>
+                       
+                <div align="center" class="add-button">
+                    <a class="button2" href="#" id="duplicateButton">Добавить услугу</a>
+                </div> 
+            </div>
+
+            <div class="third-col">
+                <div class="container-10">
+                    <div><p class="font-style1">Прибытие клиента:</p></div>
+                    <form action="" class="form" id="form_12">
+                        <div class="form__group">
+                            <input class="form__input13" id="arrivalOfClient">
+                        </div>
+                    </form>
+                    <div><p class="font-style1">Выполнение заказа:</p></div>
+                    <form action="" class="form" id="form_13">
+                        <div class="form__group">
+                            <input class="form__input13" id="orderFulfilment">
+                        </div>
+                    </form>
+                </div>
+                <div class="container-11">
+                    <form action="" class="form" id="form_14">
+                        <label class="font-style1">Бокс №: <input class="form__input14" id="box"></label>
+                    </form>
+                </div>
+                <div class="container-7">
+                    <form action="" class="form" id="form_15">
+                        <label class="result">Итого: <input class="form__input15" id="total" disabled><span> руб.</span></label>
+                    </form>
+                </div>
+                <div class="container-8">
+                    <p class="name">Отчет</p>
+                    <p><a class="font-style1" href="#">Отправить клиенту</a></p>
+                    <p><a class="font-style1" href="#">Печать</a></p>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/form.js"></script>      
+  </body>
+</html>

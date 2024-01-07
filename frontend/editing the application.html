@@ -10,7 +10,7 @@
         <div class="container">
             <nav class="header-line">
                 <a class="nav-item" href="#">Просмотр заявок</a>
-                <a class="nav-item" href="#">Добавить заявку</a>
+                <a class="nav-item" href="create the application.html">Добавить заявку</a>
                 <a class="nav-item" href="#">Управление ресурсами</a>
                 <div class="profile">
                     <a class="name">Иванов Иван Иванович</a>
@@ -25,7 +25,10 @@
             <div class="first-col">
                 <div class="container-1">
                     <div><a class="name">Заявка №1</a></div>
-                    <div><a class="status1">редактируется</a></div>
+                    <div>
+                        <a class="status1">редактируется</a>
+                        <a class="save" href="index.html">сохранить</a>
+                    </div>
                     <div class="first-block"><a class="status">в работе</a></div>
                 </div>
 
@@ -36,7 +39,7 @@
                         <p><a class="font-style1">Телефон:</a>
                         <a class="font-style2"> +7912****043</a></p>
                     </div>
-                    <div class="second-block"><a class="sent-notifications">Отправить уведомление об обновлениях</a></div>
+                    <div class="second-block"><a class="sent-notifications">Уведомить об обновлениях:</a></div>
                     <div class="logos">
                         <img class="tg" src="tg.png" alt="">
                         <img src="vk.png" alt="">
@@ -45,12 +48,8 @@
 
                 <div class="container-3">
                     <div>
-                        <p><a class="font-style1">Марка автомобиля:</a>
-                        <a class="font-style2"> LADA</a></p>
-                    </div>
-                    <div>
-                        <p><a class="font-style1">Модель:</a>
-                        <a class="font-style2"> 217130 LADA Priora</a></p>
+                        <p><div><a class="font-style1">Модель автомобиля:</a></div>
+                        <div><a class="font-style2"> 217130 LADA Priora</a></div></p>
                     </div>
                     <div>
                         <p><a class="font-style1">Регистрационный знак:</a>
@@ -64,17 +63,10 @@
                         <p><a class="font-style1">Год выпуска:</a>
                         <a class="font-style2"> 2011</a></p>
                     </div>
-                </div>
-
-                <div class="container-4">
                     <div>
-                        <p><a class="font-style1">Дата подачи заявки:</a>
-                        <a class="font-style2"> 24.02.2024</a></p>
-                    </div>
-                    <div>
-                        <p><a class="font-style1">Дата выполнения заказа:</a>
-                        <a class="font-style2"> ещё в работе</a></p>
-                    </div>
+                        <p><a class="font-style1">Пробег:</a>
+                        <a class="font-style2"> 58200 км</a></p>
+                    </div>                    
                 </div>
             </div>
 
@@ -86,22 +78,22 @@
                             <div><p><a class="design-of-price1">1300 руб.</a></p></div>                            
                         </div>
                         <div class="container-5-1-2">
-                            <div><p><a class="font-style1"> Использовать запчасти:</a></p></div>
+                            <div class="using"><p><a class="font-style1"> Использовать запчасти:</a></p></div>
                             <div>
-                                <p><a class="font-style2">деталь №1</a>
+                                <p><a class="font-style2">товар №1</a>
                                 <a class="design-of-price1">          500 руб.</a></p>
                             </div>
                             <div><a class="font-style1-1" class="space"><input type="radio" name="a" value="checked"> деталь клиента</a></div>                            
                         </div>
                         <div class="container-5-1-3">
                             <div>
-                                <p><a class="font-style2">деталь №2</a>
+                                <p><a class="font-style2">товар №2</a>
                                 <a class="design-of-price2">1200 руб.</a></p>
                             </div>
                             <div><a class="font-style1-1" class="space"><input type="radio" name="a" value="checked" checked> деталь клиента</a></div>                            
                         </div>
                         <div class="container-5-1-4">
-                            <a class="button1" href="#">Добавить деталь</a>
+                            <a class="button1" href="#">Добавить товар</a>
                         </div>
                     </div>
                     <div class="container-5-2" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 3px;" >
@@ -123,6 +115,18 @@
             </div>
             
             <div class="third-col">
+                <div class="container-10">
+                    <div><p class="font-style1">Подача заявки:</p></div>
+                    <div><p class="font-style2">24.02.2024 11:32</p></div>
+                    <div><p class="font-style1">Прибытие клиента:</p></div>
+                    <div><p class="font-style2">28.02.2024 10:00</p></div>
+                    <div><p class="font-style1">Выполнение заказа:</p></div>
+                    <div><p class="font-style2">28.02.2024 16:00</p></div>
+                </div>
+                <div class="container-11">
+                    <p><a class="font-style1">Бокс:</a>
+                    <a class="font-style2"> №2</a></p>
+                </div>
                 <div class="container-7">
                     <p class="result">Итого: <span>1800 руб.</span></p>
                 </div>
@@ -131,11 +135,9 @@
                     <p><a class="font-style1" href="#">Отправить клиенту</a></p>
                     <p><a class="font-style1" href="#">Печать</a></p>
                 </div>
-                <div align="center" class="container-9">
-                    <a class="save" href="index.html">сохранить</a>
-                </div>
             </div>
         </div>
     </main>
+    <script src="js/jquery-3.7.1.min.js"></script>  
   </body>
 </html>

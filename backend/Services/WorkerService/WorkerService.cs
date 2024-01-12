@@ -12,6 +12,14 @@ namespace CarServiceWebConsole.Services.WorkerService
             _context = context;
         }
 
+        public async Task<List<Worker>> GetAllWorkersAlphabeticallyAsync()
+        {
+            var workers = await _context.Workers
+                .OrderBy(worker => worker.Surname)
+                .ToListAsync();
+            return workers;
+        }
+
         public async Task<Worker> GetWorkerByFullName(string name, string? patronymic, string surname)
         {
             var worker = await _context.Workers.FirstOrDefaultAsync(w => 

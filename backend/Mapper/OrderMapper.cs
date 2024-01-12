@@ -210,7 +210,6 @@ namespace CarServiceWebConsole.Mapper
 
         private static int GetTotalPrice(Order order)
         {
-            Console.WriteLine(order.Id);
             var materialsTotalSum = 0;
             var servicesTotalSum = 0;
             var productsTotalSum = order.ProductPositions

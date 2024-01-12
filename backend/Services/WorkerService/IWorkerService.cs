@@ -3,5 +3,6 @@
     public interface IWorkerService
     {
         Task<Worker> GetWorkerByFullName(string name, string? patronymic, string surname);
+        Task<List<Worker>> GetAllWorkersAlphabeticallyAsync();
     }
 }

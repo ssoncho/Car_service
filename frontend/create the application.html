@@ -9,7 +9,7 @@
     <header>
         <div class="container">
             <nav class="header-line">
-                <a class="nav-item" href="#">Просмотр заявок</a>
+                <a class="nav-item" href="view all applications.html">Просмотр заявок</a>
                 <a class="nav-item active" href="#">Добавить заявку</a>
                 <a class="nav-item" href="#">Управление ресурсами</a>
                 <div class="profile">
@@ -24,10 +24,10 @@
         <div class="col">
             <div class="first-col">
                 <div class="container-1">
-                    <div><a class="name">Заявка №2</a></div>
+                    <div><a class="name">Новый заказ</a></div>
                     <a class="status1">создается</a>
                     <a class="save" href="#" id="saveButton">сохранить</a>
-                    <div class="first-block"><a class="status">в работе</a></div>
+                    <div class="first-block"><a class="status">поступил</a></div>
                 </div>
 
                 <div class="container-2">
@@ -89,6 +89,14 @@
 
             <div class="second-col" id="second-col">
                 <div id="createServiceList">
+                    <div class="reason-for-appeal">
+                        <div><p class="font-style1">Причина обращения:</p></div>
+                        <form action="" class="form2" id="form_16">
+                            <div class="form__group">
+                                <textarea class="form__input17" id="reason-for-appeal"></textarea>
+                            </div>
+                        </form>
+                    </div>                    
                     <div class="createService" id="createService">
                         <div style="display: flex;" class="container-5">
                             <div class="container-5-1" style="flex: 1; padding-left: 15px; padding-top: 20px; padding-bottom: 15px; padding-right: 15px;"; width: 350px;">
@@ -117,15 +125,40 @@
                                     <div><p class="font-style1">Ответственный механик:</p></div>
                                     <form action="" class="form1">
                                         <div class="form__group">
-                                            <input class="form__input12 mechanic" id="mechanic">
+                                            <input class="form__input12 mechanic" id="mechanic" readonly>
                                         </div>
                                     </form>
+                                    <div class="add-mechanic">
+                                        <a class="button3" href="#" id="openModalBtn">Добавить механика</a>
+                                    </div>
+                                    <div class="modal" id="myModal">
+                                        <div class="modal-content">
+                                          <!--<a class="close" href="#">&times;</a>-->
+                                            <form action="" class="form" id="form_17">
+                                                <div class="form__group">
+                                                    <input type="text" placeholder="Поиск сотрудника..." class="form__input18 search" id="search">
+                                                </div>
+                                                <img class="search-icon" src="search-icon.png" alt="">
+                                            </form>
+                                            <ul class="mechanics-list" id="mechanics-list">
+                                                <!-- <li class="mechanics-list-item"><a href="#">Иванов Иван Иванович</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Сергеев Сергей Сергеевич</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Андреев Андрей Андреевич</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Александров Александр Александрович</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Анисимов Анисим Анисимович</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Михайлов Михаил Михайлович</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Алексеев Алексей Алексеевич</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Степанов Степан Степанович</a></li>
+                                                <li class="mechanics-list-item"><a href="#">Борисов Борис Борисович</a></li> -->
+                                            </ul>
+                                            <div align="center"><a class="save-mechanic-button" href="#" id="save-mechanic-button">сохранить</a></div>                             
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>              
                     </div>             
-                </div>
-                       
+                </div>                     
                 <div align="center" class="add-button">
                     <a class="button2" href="#" id="duplicateButton">Добавить услугу</a>
                 </div> 
@@ -165,6 +198,7 @@
         </div>
     </main>
     <script src="js/jquery-3.7.1.min.js"></script>
-    <script src="js/form.js"></script>      
+    <script src="js/form.js"></script>
+    <script src="js/modal-window.js"></script>      
   </body>
 </html>

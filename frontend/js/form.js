@@ -19,7 +19,7 @@ $("#saveButton").on("click", function() {
     });
 
     let userData = {
-        "problemDescription": "",
+        "problemDescription": $("#reason-for-appeal").val(),
         "status": "notViewed",
         "car": {
             "mileage": $("#mileAge").val(),
@@ -52,12 +52,13 @@ $("#saveButton").on("click", function() {
     // Отправка данных на сервер
     $.ajax({
         type: "POST",
-        url: "https://9e9a-90-151-96-105.ngrok-free.app/api/Orders/", // URL для обработки данных на сервере
+        url: "https://5c08-178-46-122-56.ngrok-free.app/api/Orders/", // URL для обработки данных на сервере
         data: JSON.stringify(userData), // Данные в формате JSON
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function(response) {
         console.log("Данные успешно сохранены!");
+        document.location = "view all applications.html"
         },
         error: function(error) {
         console.error("Произошла ошибка при сохранении данных");
@@ -66,17 +67,61 @@ $("#saveButton").on("click", function() {
     });
 });
 
-
 //клонирование при нажатии на кнопку "добавить услугу"
 
-$("#duplicateButton").on("click", function() {
-    var originalBlock = $("#createService");
-    var clonedBlock = originalBlock.clone();
+$(".button2").on("click", function() {
+    let originalBlock = $("#createService");
+    let clonedBlock = originalBlock.clone();
     clonedBlock.find(".mechanic").val("");
     clonedBlock.find(".requiredService").val("");
     clonedBlock.find(".costOfService").val("");
-    $("#createServiceList").append(clonedBlock);
-    
+    $("#createServiceList").append(clonedBlock);    
+    let formTopPosition = clonedBlock.offset().top;
+    $('html, body').animate({
+        scrollTop: formTopPosition
+      }, 500);
+        
+    // На клик по кнопке открывается модальное окно для выбора механика
+    let currenPosition;
+    $(".button3").on("click", function() { 
+        currenPosition = $(window).scrollTop();
+        $(".modal").css("display", "block");
+        $(".mechanics-list li").css("font-weight", "normal");
+        let currentService = $(this).closest(".createService"); // Находим родительскую услугу только внутри клонированного блока
+        $(".activeService").removeClass("activeService");  // убрать класс у прошлого выделенного
+        currentService.addClass("activeService");
+    }); //МОЖНО КАК-ТО ИСКАТЬ ЭТОТ КЛАСС НЕ СРЕДИ ВСЕХ, А СРЕДИ CLONEDBLOCK?
+
+    // Закрыть модальное окно по клику на крестик
+    $(".close").on("click", function() {
+        $("#myModal").css("display", "none");
+    });
+
+    // Закрыть модальное окно при клике вне его
+    $(window).on("click", function(event) {
+        if ($(event.target).hasClass('modal')) {
+            $(".modal").css("display", "none");
+        };
+    });
+
+    // Выбор механика из модального окна
+    $(".mechanics-list li").on("click", function() {
+        $(".mechanics-list li").css("font-weight", "normal"); // Сбрасываем стиль всех механиков
+        $(this).css("font-weight", "bold"); // Устанавливаем жирный шрифт для выбранного механика
+    });
+
+
+    $(".save-mechanic-button").on("click", function() {     
+        let selectedMechanic = $(".mechanics-list li").filter(function() {
+            return $(this).css("font-weight") === "700"; // Поиск выбранного механика с жирным шрифтом
+        }).text();
+        $(".activeService .mechanic").val(selectedMechanic); // Записываем имя выбранного механика в поле ввода               
+        $(".modal").css("display", "none");   
+        $('html, body').animate({
+            scrollTop: $(document).height()
+        }, 1);
+    });
+
     $(".costOfService").on("change", function() {
         let sum = 0;
         $(".costOfService").each(function() {
@@ -86,6 +131,7 @@ $("#duplicateButton").on("click", function() {
     });
 });
 
+$("#total").val(0);
 $(".costOfService").on("change", function() {
     let sum = 0;
     $(".costOfService").each(function() {
@@ -93,3 +139,39 @@ $(".costOfService").on("change", function() {
     });
     $("#total").val(sum);
 });
+
+
+
+// На клик по кнопке открывается модальное окно для выбора механика
+$(".button3").on("click", function() {
+    $(".modal").css("display", "block");
+    $(".createService").removeClass("activeService");  // убрать класс у прошлого выделенного
+    $(this).closest(".createService").addClass("activeService");
+});
+
+// Закрыть модальное окно по клику на крестик
+$(".close").on("click", function() {
+    $("#myModal").css("display", "none");
+});
+
+// Закрыть модальное окно при клике вне его
+$(window).on("click", function(event) {
+    if (event.target === document.getElementById("myModal")) {
+        $(".modal").css("display", "none");
+    };
+});
+
+
+// Выбор механика из модального окна
+// $(".mechanics-list li").on("click", function() {
+//     $(".mechanics-list li").css("font-weight", "normal"); // Сбрасываем стиль всех механиков
+//     $(this).css("font-weight", "bold"); // Устанавливаем жирный шрифт для выбранного механика
+//   });
+
+//   $("#save-mechanic-button").on("click", function() {
+//     let selectedMechanic = $(".mechanics-list li").filter(function() {
+//       return $(this).css("font-weight") === "700"; // Поиск выбранного механика с жирным шрифтом
+//     }).text();
+//     $("#mechanic").val(selectedMechanic); // Записываем имя выбранного механика в поле ввода
+//     $("#myModal").css("display", "none");
+//   });

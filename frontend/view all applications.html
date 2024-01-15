@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <title>Веб-консоль</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <header>
+        <div class="container">
+            <nav class="header-line">
+                <a class="nav-item active" href="#">Просмотр заявок</a>
+                <a class="nav-item" href="create the application.html">Добавить заявку</a>
+                <a class="nav-item" href="#">Управление ресурсами</a>
+                <div class="profile">
+                    <a class="name">Иванов Иван Иванович</a>
+                    <div align="right"><a class="exit" href="#">Выйти</a></div>                    
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="statuses-bar">
+            <a class="button all-orders" href="#" id="allFilterButton">все заявки</a>
+            <a class="button planned" href="#" id="plannedFilterButton">запланирован</a>
+            <a class="button received" href="#" id="receivedFilterButton">поступил</a>
+            <a class="button in-work" href="#" id="inProgressFilterButton">в работе</a>
+            <a class="button completed" href="#" id="completedFilterButton">завершен</a>
+        </section>
+        <div class="informations">
+            <div class="order">Заказ</div>
+            <div class="order-received">Поступил</div>
+            <div class="status-of-order">Статус</div>
+            <div class="order-completed">Завершен</div>
+            <div class="cost-of-order">Стоимость</div>
+            <div class="client">Клиент</div>
+            <div class="responsible">Ответственные</div>
+        </div>
+        <div class="all-applications" id="all-applications">
+        </div>    
+    </main>
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/functions.js"></script>    
+    <script src="js/all-applications.js"></script>
+    <script src="js/filters.js"></script>
+  </body>
+</html>
+

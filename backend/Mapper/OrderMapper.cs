@@ -210,19 +210,20 @@ namespace CarServiceWebConsole.Mapper
 
         private static int GetTotalPrice(Order order)
         {
-            var materialsTotalSum = 0;
+            //var materialsTotalSum = 0;
             var servicesTotalSum = 0;
-            var productsTotalSum = order.ProductPositions
-                .Select(p => p.Price)
-                .Sum(); ;
+            //var productsTotalSum = order.ProductPositions
+            //    .Select(p => p.Price)
+            //    .Sum(); ;
             foreach (var workerParticipation in order.WorkerParticipations)
             {
-                materialsTotalSum += workerParticipation.MaterialPositions
-                    .Select(m => m.ClientHas ? 0 : m.Price * m.Count)
-                    .Sum();
+                //materialsTotalSum += workerParticipation.MaterialPositions
+                //    .Select(m => m.ClientHas ? 0 : m.Price * m.Count)
+                //    .Sum();
                 servicesTotalSum += workerParticipation.ServicePosition.Price;
             }
-            return materialsTotalSum + servicesTotalSum + productsTotalSum;
+            //return materialsTotalSum + servicesTotalSum + productsTotalSum;
+            return servicesTotalSum;
         }
     }
 }
